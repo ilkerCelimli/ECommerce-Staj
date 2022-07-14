@@ -1,11 +1,10 @@
 package com.portifolyo.mesleki1.entity.AdresEntities;
 
 import com.portifolyo.mesleki1.entity.BaseEntity;
-import com.portifolyo.mesleki1.entity.UserAdress;
+import com.portifolyo.mesleki1.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -16,7 +15,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 public class Adress extends BaseEntity {
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @Column
     private City city;
     @Column
@@ -29,6 +28,6 @@ public class Adress extends BaseEntity {
     private String binaNo;
 
     @ManyToOne
-    private UserAdress userAdress;
+    private User user;
 
 }

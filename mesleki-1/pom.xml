@@ -14,16 +14,10 @@
 	<name>mesleki-1</name>
 	<description>Mesleki Uygulama-1 Projesidir.</description>
 	<properties>
-		<org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 
-			<dependency>
-				<groupId>org.mapstruct</groupId>
-				<artifactId>mapstruct</artifactId>
-				<version>${org.mapstruct.version}</version>
-			</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -89,15 +83,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+
 					<excludes>
-						<annotationProcessorPaths>
-							<path>
-								<groupId>org.mapstruct</groupId>
-								<artifactId>mapstruct-processor</artifactId>
-								<version>${org.mapstruct.version}</version>
-							</path>
-							<!-- other annotation processors -->
-						</annotationProcessorPaths>
+
 
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -106,6 +94,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 

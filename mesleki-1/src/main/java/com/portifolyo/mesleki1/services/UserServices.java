@@ -15,8 +15,9 @@ public interface UserServices extends BaseServices<User> {
     boolean SendUserEmail(String email);
     boolean userRegister(UserRegisterDto dto) throws SQLException;
     boolean activiteEmail(String code) throws SQLException;
-
+    void resetPasswordRequest(String email);
     boolean updateUser(String id,UserRegisterDto dto) throws SqlExceptionCustom;
+    void ChangePassword(String id,String password) throws SqlExceptionCustom;
 
 
 }

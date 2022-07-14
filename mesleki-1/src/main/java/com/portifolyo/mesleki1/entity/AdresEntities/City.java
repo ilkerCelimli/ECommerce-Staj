@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Inheritance(strategy = InheritanceType.JOINED)
 @EqualsAndHashCode(callSuper = true)
@@ -21,7 +18,7 @@ public class City extends BaseEntity {
 
     private String code;
     private String city;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Country country;
 
 }

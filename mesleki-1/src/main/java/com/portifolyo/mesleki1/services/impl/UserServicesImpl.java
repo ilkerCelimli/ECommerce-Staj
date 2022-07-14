@@ -1,12 +1,15 @@
 package com.portifolyo.mesleki1.services.impl;
 
 import com.portifolyo.mesleki1.dtos.UserRegisterDto;
+import com.portifolyo.mesleki1.entity.AdresEntities.Adress;
 import com.portifolyo.mesleki1.entity.User;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.EmailActiviteException;
 import com.portifolyo.mesleki1.exceptions.apiexception.UserRegisterException;
+import com.portifolyo.mesleki1.mappers.AdressDtoMapper;
 import com.portifolyo.mesleki1.mappers.UserRegisterMapper;
 import com.portifolyo.mesleki1.repository.UserRepository;
+import com.portifolyo.mesleki1.services.AdressServices;
 import com.portifolyo.mesleki1.services.UserServices;
 import com.portifolyo.mesleki1.utils.RandomString;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +26,14 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
 
     private final UserRepository userRepository;
     private final UserRegisterMapper userRegisterMapper;
-
-    public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper) {
+    private final AdressServices adressServices;
+    private final AdressDtoMapper adressDtoMapper;
+    public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper, AdressServices adressServices, AdressDtoMapper adressDtoMapper) {
         super(userRepository);
         this.userRepository = userRepository;
         this.userRegisterMapper = userRegisterMapper;
+        this.adressServices = adressServices;
+        this.adressDtoMapper = adressDtoMapper;
     }
 
     @Override
@@ -71,7 +77,10 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
             u.setActive(true);
             u.setEmailActivated(false);
             u.setActivitionCode(new RandomString().nextString());
-            save(u);
+
+            User f = save(u);
+            Adress a = adressDtoMapper.toEntity(dto.getAdress());
+            this.adressServices.save(a);
             return true;
         } else throw new UserRegisterException();
     }
@@ -88,6 +97,14 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         } else throw new EmailActiviteException();
     }
 
+    @Override //TODO Write This....
+    public void resetPasswordRequest(String email) {
+        if(checkUserIsExists(email)) {
+
+        }
+    }
+
+    //TODO UpdateUser refactor
     @Override
     public boolean updateUser(String id, UserRegisterDto dto) throws SqlExceptionCustom {
         User u = findById(id);
@@ -117,5 +134,12 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
             return true;
         }
 
+    }
+
+    @Override
+    public void ChangePassword(String id, String password) throws SqlExceptionCustom {
+       User u = findById(id);
+       u.setPassword(password);
+       save(u);
     }
 }

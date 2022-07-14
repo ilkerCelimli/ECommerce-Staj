@@ -12,7 +12,7 @@ import java.util.List;
 public class Country extends BaseEntity {
     private String code;
     private String country;
-     @OneToMany(mappedBy = "country")
+     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private List<City> cities;
 
 

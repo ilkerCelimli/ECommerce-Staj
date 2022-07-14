@@ -1,10 +1,12 @@
 package com.portifolyo.mesleki1.entity;
 
+import com.portifolyo.mesleki1.entity.AdresEntities.Adress;
 import com.portifolyo.mesleki1.enums.ROLE;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -36,8 +38,8 @@ public class User extends BaseEntity {
   @Column
   private String activitionCode;
 
-  @ManyToOne(cascade = CascadeType.PERSIST)
-  private UserAdress userAdress;
+  @OneToMany(mappedBy = "user")
+  private List<Adress> adressList;
 
   public User(String name, String surname, ROLE role, String phoneNumber, String email, String password, Date birtday, long tcNo, String activitionCode) {
     this.name = name;
