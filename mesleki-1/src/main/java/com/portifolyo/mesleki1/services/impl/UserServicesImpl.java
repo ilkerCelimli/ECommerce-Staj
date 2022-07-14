@@ -11,6 +11,7 @@ import com.portifolyo.mesleki1.mappers.AdressDtoMapper;
 import com.portifolyo.mesleki1.mappers.UserRegisterMapper;
 import com.portifolyo.mesleki1.repository.UserRepository;
 import com.portifolyo.mesleki1.services.AdressServices;
+import com.portifolyo.mesleki1.services.ShopperService;
 import com.portifolyo.mesleki1.services.UserServices;
 import com.portifolyo.mesleki1.utils.RandomString;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,6 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -31,12 +31,14 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     private final UserRegisterMapper userRegisterMapper;
     private final AdressServices adressServices;
     private final AdressDtoMapper adressDtoMapper;
-    public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper, AdressServices adressServices, AdressDtoMapper adressDtoMapper) {
+    private final ShopperService shopperService;
+    public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper, AdressServices adressServices, AdressDtoMapper adressDtoMapper, ShopperService shopperService) {
         super(userRepository);
         this.userRepository = userRepository;
         this.userRegisterMapper = userRegisterMapper;
         this.adressServices = adressServices;
         this.adressDtoMapper = adressDtoMapper;
+        this.shopperService = shopperService;
     }
 
     @Override
@@ -84,6 +86,12 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
             u.setActivitionCode(new RandomString().nextString());
             u.setId(null);
             User f = save(u);
+            if(f.getRole().equals(ROLE.SHOP)) {
+                boolean result = shopperService.shopperCheckandSave(f);
+                if(!result) {
+                    throw new UserRegisterException();
+                }
+            }
             Adress a = adressDtoMapper.toEntity(dto.getAdress());
             a.setUser(f);
             this.adressServices.save(a);
