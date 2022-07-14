@@ -1,7 +1,6 @@
 package com.portifolyo.mesleki1.services;
 
-import com.portifolyo.mesleki1.entity.AdresEntities.City;
-import com.portifolyo.mesleki1.repository.BaseRepository;
+import com.portifolyo.mesleki1.entity.City;
 
 public interface CityServices extends BaseServices<City> {
 

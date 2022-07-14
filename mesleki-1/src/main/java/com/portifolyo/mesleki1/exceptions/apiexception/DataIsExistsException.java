@@ -5,14 +5,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
 @RestControllerAdvice
 @ResponseStatus(HttpStatus.FOUND)
 public class DataIsExistsException extends RuntimeException {
 
 
-    @ExceptionHandler
-    public ResponseEntity DataIsExistException() {
+    @ExceptionHandler(DataIsExistsException.class)
+    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    public ResponseEntity DataIsExistException(Exception ex, WebRequest web) {
         return ResponseEntity.unprocessableEntity().build();
     }
 

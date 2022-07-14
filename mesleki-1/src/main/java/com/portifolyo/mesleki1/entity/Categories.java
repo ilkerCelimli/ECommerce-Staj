@@ -21,5 +21,5 @@ public class Categories extends BaseEntity {
     private String name;
     private String description;
     @OneToMany(mappedBy = "categories")
-    private List<SubCategories> subCategories;
+    private List<Product> products;
 }

@@ -1,6 +1,6 @@
 package com.portifolyo.mesleki1.repository.projections;
 
-import com.portifolyo.mesleki1.entity.AdresEntities.City;
+import com.portifolyo.mesleki1.entity.City;
 import com.portifolyo.mesleki1.enums.ROLE;
 
 import java.util.List;

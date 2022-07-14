@@ -13,10 +13,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 @EnableJpaAuditing
+
+
 public class Mesleki1Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Mesleki1Application.class, args);
 	}
+
 
 }

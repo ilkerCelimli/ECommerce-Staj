@@ -1,12 +1,10 @@
 package com.portifolyo.mesleki1.services.impl;
 
-import com.portifolyo.mesleki1.entity.AdresEntities.City;
+import com.portifolyo.mesleki1.entity.City;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.repository.CityRepository;
 import com.portifolyo.mesleki1.services.CityServices;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 

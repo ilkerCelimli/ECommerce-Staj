@@ -1,16 +1,13 @@
 package com.portifolyo.mesleki1.mappers;
 
 import com.portifolyo.mesleki1.dtos.AdressDto;
-import com.portifolyo.mesleki1.entity.AdresEntities.Adress;
-import com.portifolyo.mesleki1.entity.AdresEntities.City;
-import com.portifolyo.mesleki1.entity.AdresEntities.Country;
+import com.portifolyo.mesleki1.entity.Adress;
+import com.portifolyo.mesleki1.entity.City;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.repository.CityRepository;
 import com.portifolyo.mesleki1.repository.CountryRepository;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -34,7 +31,12 @@ public class AdressDtoMapper {
             adres.setSokak(dto.getSokak());
             return adres;
         }
-            else throw new NotFoundException();
+        Adress adres = new Adress();
+        adres.setBinaNo(dto.getBinaNo());
+        adres.setIlce(dto.getIlce());
+        adres.setMahalle(dto.getMahalle());
+        adres.setSokak(dto.getSokak());
+        return adres;
     }
 
 

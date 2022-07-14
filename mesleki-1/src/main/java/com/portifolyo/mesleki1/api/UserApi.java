@@ -6,6 +6,7 @@ import com.portifolyo.mesleki1.exceptions.apiexception.EmailActiviteException;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.exceptions.apiexception.UserRegisterException;
 import com.portifolyo.mesleki1.services.UserServices;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.sql.SQLException;
 
 
+@SuppressWarnings("ALL")
 @RestController
 @RequestMapping("/api/user")
 public class UserApi {
@@ -24,22 +26,19 @@ public class UserApi {
     }
 
 
-    @ExceptionHandler({UserRegisterException.class, SQLException.class})
     @PostMapping("/registerUser")
-    public ResponseEntity registerUser(@RequestBody @Valid UserRegisterDto userRegisterDto) throws SQLException {
+    public ResponseEntity registerUser(@RequestBody UserRegisterDto userRegisterDto) throws SQLException {
         userServices.userRegister(userRegisterDto);
         return ResponseEntity.created(null).build();
     }
 
     @GetMapping("/activitemail/{code}")
-    @ExceptionHandler({EmailActiviteException.class, SQLException.class,NotFoundException.class})
     public ResponseEntity ActiveMail(@PathVariable String code) throws SQLException {
         boolean result = userServices.activiteEmail(code);
 
         return result ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
-    @ExceptionHandler({SqlExceptionCustom.class, NotFoundException.class})
     @PostMapping("/updateUser/{id}")
     public ResponseEntity updateUser(@PathVariable String id, @RequestBody UserRegisterDto userRegisterDto) throws SQLException {
         boolean result = this.userServices.updateUser(id, userRegisterDto);
@@ -53,8 +52,9 @@ public class UserApi {
     }
 
    @GetMapping("/resetPassword/{id}/{password}")
-    public ResponseEntity resetPassword(@PathVariable("id") String id,@PathVariable("password") String password) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity resetPassword(@PathVariable("id") String id,@PathVariable("password") String password) throws SqlExceptionCustom {
+       this.userServices.ChangePassword(id,password);
+       return ResponseEntity.ok().build();
    }
 
 

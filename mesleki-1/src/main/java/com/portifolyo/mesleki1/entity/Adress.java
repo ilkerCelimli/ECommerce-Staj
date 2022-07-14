@@ -1,7 +1,5 @@
-package com.portifolyo.mesleki1.entity.AdresEntities;
+package com.portifolyo.mesleki1.entity;
 
-import com.portifolyo.mesleki1.entity.BaseEntity;
-import com.portifolyo.mesleki1.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,7 +14,6 @@ import javax.persistence.*;
 public class Adress extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Column
     private City city;
     @Column
     private String sokak;

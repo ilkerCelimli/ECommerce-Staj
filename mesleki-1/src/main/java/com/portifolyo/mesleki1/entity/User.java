@@ -1,6 +1,5 @@
 package com.portifolyo.mesleki1.entity;
 
-import com.portifolyo.mesleki1.entity.AdresEntities.Adress;
 import com.portifolyo.mesleki1.enums.ROLE;
 import lombok.*;
 
@@ -11,8 +10,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Entity
-
+@Entity(name = "users")
+@Table(name = "users")
 public class User extends BaseEntity {
 
 
@@ -38,7 +37,7 @@ public class User extends BaseEntity {
   @Column
   private String activitionCode;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
   private List<Adress> adressList;
 
   public User(String name, String surname, ROLE role, String phoneNumber, String email, String password, Date birtday, long tcNo, String activitionCode) {

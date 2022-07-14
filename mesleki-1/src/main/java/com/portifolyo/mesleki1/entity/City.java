@@ -1,6 +1,5 @@
-package com.portifolyo.mesleki1.entity.AdresEntities;
+package com.portifolyo.mesleki1.entity;
 
-import com.portifolyo.mesleki1.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +18,7 @@ public class City extends BaseEntity {
     private String code;
     private String city;
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "country_id")
     private Country country;
 
 }

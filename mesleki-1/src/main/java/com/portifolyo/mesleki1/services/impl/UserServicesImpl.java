@@ -1,8 +1,9 @@
 package com.portifolyo.mesleki1.services.impl;
 
 import com.portifolyo.mesleki1.dtos.UserRegisterDto;
-import com.portifolyo.mesleki1.entity.AdresEntities.Adress;
+import com.portifolyo.mesleki1.entity.Adress;
 import com.portifolyo.mesleki1.entity.User;
+import com.portifolyo.mesleki1.enums.ROLE;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.EmailActiviteException;
 import com.portifolyo.mesleki1.exceptions.apiexception.UserRegisterException;
@@ -17,6 +18,8 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -40,6 +43,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     public boolean checkUserIsExists(String email) {
         return this.userRepository.existsUserByEmail(email);
     }
+
 
     @Override
     public boolean checkUserIsActivated(String email) {
@@ -72,14 +76,16 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
 
     @Override
     public boolean userRegister(UserRegisterDto dto) throws SQLException {
-        if (checkUserIsExists(dto.getEmail())) {
+        if (!checkUserIsExists(dto.getEmail())) {
             User u = this.userRegisterMapper.toEntity(dto);
+            u.setRole(ROLE.ADMIN);
             u.setActive(true);
             u.setEmailActivated(false);
             u.setActivitionCode(new RandomString().nextString());
-
+            u.setId(null);
             User f = save(u);
             Adress a = adressDtoMapper.toEntity(dto.getAdress());
+            a.setUser(f);
             this.adressServices.save(a);
             return true;
         } else throw new UserRegisterException();
@@ -91,7 +97,6 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         if (o.isPresent()) {
             User u = o.get();
             u.setEmailActivated(true);
-            u.setActivitionCode(null);
             update(u);
             return true;
         } else throw new EmailActiviteException();
@@ -109,30 +114,27 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     public boolean updateUser(String id, UserRegisterDto dto) throws SqlExceptionCustom {
         User u = findById(id);
 
-        if (!Strings.isBlank(dto.getEmail()) || !Strings.isBlank(dto.getEmail())) {
+        if (!Strings.isBlank(dto.getEmail()) || !Strings.isBlank(dto.getEmail()) || !Objects.isNull(dto.getEmail())) {
             dto.setEmail(u.getEmail());
         }
 
-        if (!Strings.isBlank(dto.getPassword()) || !Strings.isEmpty(dto.getPassword())) {
+        if (!Strings.isBlank(dto.getPassword()) || !Strings.isEmpty(dto.getPassword()) ||!Objects.isNull(dto.getPassword())) {
             dto.setPassword(u.getPassword());
         }
 
-        if (!Strings.isBlank(dto.getName()) || !Strings.isEmpty(dto.getName())) {
+        if (!Strings.isBlank(dto.getName()) || !Strings.isEmpty(dto.getName()) ||!Objects.isNull(dto.getName())) {
             dto.setName(u.getName());
         }
 
-        if (!Strings.isBlank(dto.getSurname()) || !Strings.isEmpty(dto.getSurname())) {
+        if (!Strings.isBlank(dto.getSurname()) || !Strings.isEmpty(dto.getSurname()) ||!Objects.isNull(dto.getSurname())) {
             dto.setSurname(u.getSurname());
         }
+      //  u.setUpdatedAt(new Date());
         User f = update(u);
-        if (f.getUpdatedAt().after(u.getUpdatedAt()) || f.getUpdatedAt().equals(u.getUpdatedAt())) {
-            log.error("User update failed {} {}" , f.getUpdatedAt(),f.getId());
-            throw new SqlExceptionCustom();
 
-        } else {
             log.info("Kullanıcı güncellendi {} {}" , u.getId(), u.getUpdatedAt());
             return true;
-        }
+
 
     }
 

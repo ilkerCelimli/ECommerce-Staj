@@ -1,8 +1,7 @@
 package com.portifolyo.mesleki1.services.impl;
 
-import com.portifolyo.mesleki1.entity.AdresEntities.Country;
+import com.portifolyo.mesleki1.entity.Country;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
-import com.portifolyo.mesleki1.repository.BaseRepository;
 import com.portifolyo.mesleki1.repository.CountryRepository;
 import com.portifolyo.mesleki1.services.CountryServices;
 

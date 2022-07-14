@@ -1,6 +1,5 @@
 package com.portifolyo.mesleki1.dtos;
 
-import com.portifolyo.mesleki1.entity.AdresEntities.Adress;
 import com.portifolyo.mesleki1.enums.ROLE;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +20,6 @@ public class UserRegisterDto {
 
     private String surname;
     private ROLE role;
-
     private String phoneNumber;
     @Email(message = "Email is not valid")
     private String email;

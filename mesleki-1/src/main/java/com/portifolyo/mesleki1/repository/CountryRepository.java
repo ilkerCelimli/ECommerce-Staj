@@ -1,6 +1,6 @@
 package com.portifolyo.mesleki1.repository;
 
-import com.portifolyo.mesleki1.entity.AdresEntities.Country;
+import com.portifolyo.mesleki1.entity.Country;
 
 import java.util.Optional;
 

@@ -1,6 +1,7 @@
-package com.portifolyo.mesleki1.entity.AdresEntities;
+package com.portifolyo.mesleki1.entity;
 
 import com.portifolyo.mesleki1.entity.BaseEntity;
+import com.portifolyo.mesleki1.entity.City;
 import lombok.Data;
 
 import javax.persistence.*;

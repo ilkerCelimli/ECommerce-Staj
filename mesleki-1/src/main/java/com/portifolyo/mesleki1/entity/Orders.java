@@ -1,6 +1,5 @@
 package com.portifolyo.mesleki1.entity;
 
-import com.portifolyo.mesleki1.entity.AdresEntities.Adress;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
