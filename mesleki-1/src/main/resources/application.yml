@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    username: admin
+    password: 12345
+    url: jdbc:postgresql://localhost:10000/eCommerce
+
