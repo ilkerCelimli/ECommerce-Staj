@@ -39,7 +39,7 @@ public class UserApi {
         return result ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("/updateUser/{id}")
+    @PutMapping("/updateUser/{id}")
     public ResponseEntity updateUser(@PathVariable String id, @RequestBody UserRegisterDto userRegisterDto) throws SQLException {
         boolean result = this.userServices.updateUser(id, userRegisterDto);
         return result ? ResponseEntity.ok().build() : null;

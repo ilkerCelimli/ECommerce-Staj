@@ -6,6 +6,7 @@ import com.portifolyo.mesleki1.entity.User;
 import com.portifolyo.mesleki1.enums.ROLE;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.EmailActiviteException;
+import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.exceptions.apiexception.UserRegisterException;
 import com.portifolyo.mesleki1.mappers.AdressDtoMapper;
 import com.portifolyo.mesleki1.mappers.UserRegisterMapper;
@@ -32,6 +33,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     private final AdressServices adressServices;
     private final AdressDtoMapper adressDtoMapper;
     private final ShopperService shopperService;
+
     public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper, AdressServices adressServices, AdressDtoMapper adressDtoMapper, ShopperService shopperService) {
         super(userRepository);
         this.userRepository = userRepository;
@@ -49,10 +51,11 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
 
     @Override
     public boolean checkUserIsActivated(String email) {
-        if (checkUserIsActivated(email)) {
+        if (checkUserIsExists(email)) {
             User u = this.userRepository.findUserByEmailEquals(email).get();
             return u.isActive() && u.isEmailActivated();
-        } else return false;
+
+        } else throw new NotFoundException();
     }
 
     @Override
@@ -80,15 +83,13 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     public boolean userRegister(UserRegisterDto dto) throws SQLException {
         if (!checkUserIsExists(dto.getEmail())) {
             User u = this.userRegisterMapper.toEntity(dto);
-            u.setRole(ROLE.ADMIN);
             u.setActive(true);
             u.setEmailActivated(false);
             u.setActivitionCode(new RandomString().nextString());
-            u.setId(null);
             User f = save(u);
-            if(f.getRole().equals(ROLE.SHOP)) {
+            if (f.getRole().equals(ROLE.SHOP)) {
                 boolean result = shopperService.shopperCheckandSave(f);
-                if(!result) {
+                if (!result) {
                     throw new UserRegisterException();
                 }
             }
@@ -112,7 +113,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
 
     @Override //TODO Write This....
     public void resetPasswordRequest(String email) {
-        if(checkUserIsExists(email)) {
+        if (checkUserIsExists(email)) {
 
         }
     }
@@ -126,30 +127,30 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
             dto.setEmail(u.getEmail());
         }
 
-        if (!Strings.isBlank(dto.getPassword()) || !Strings.isEmpty(dto.getPassword()) ||!Objects.isNull(dto.getPassword())) {
+        if (!Strings.isBlank(dto.getPassword()) || !Strings.isEmpty(dto.getPassword()) || !Objects.isNull(dto.getPassword())) {
             dto.setPassword(u.getPassword());
         }
 
-        if (!Strings.isBlank(dto.getName()) || !Strings.isEmpty(dto.getName()) ||!Objects.isNull(dto.getName())) {
+        if (!Strings.isBlank(dto.getName()) || !Strings.isEmpty(dto.getName()) || !Objects.isNull(dto.getName())) {
             dto.setName(u.getName());
         }
 
-        if (!Strings.isBlank(dto.getSurname()) || !Strings.isEmpty(dto.getSurname()) ||!Objects.isNull(dto.getSurname())) {
+        if (!Strings.isBlank(dto.getSurname()) || !Strings.isEmpty(dto.getSurname()) || !Objects.isNull(dto.getSurname())) {
             dto.setSurname(u.getSurname());
         }
-      //  u.setUpdatedAt(new Date());
+        //  u.setUpdatedAt(new Date());
         User f = update(u);
 
-            log.info("Kullanıcı güncellendi {} {}" , u.getId(), u.getUpdatedAt());
-            return true;
+        log.info("Kullanıcı güncellendi {} {}", u.getId(), u.getUpdatedAt());
+        return true;
 
 
     }
 
     @Override
     public void ChangePassword(String id, String password) throws SqlExceptionCustom {
-       User u = findById(id);
-       u.setPassword(password);
-       save(u);
+        User u = findById(id);
+        u.setPassword(password);
+        save(u);
     }
 }

@@ -23,6 +23,14 @@ public class Product extends BaseEntity{
     private BigDecimal price;
     @ManyToOne
     private Categories categories;
+    @ManyToOne
+    private Shopper shopper;
 
+
+    public Product(String name,String description,BigDecimal price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 
 }

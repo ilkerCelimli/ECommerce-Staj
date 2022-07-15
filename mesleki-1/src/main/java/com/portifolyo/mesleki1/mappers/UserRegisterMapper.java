@@ -11,8 +11,16 @@ public class UserRegisterMapper {
 
 
     public User toEntity(UserRegisterDto dto) {
+        ROLE role;
+        if(dto.getRole().equals("ADMIN")) {
+            role = ROLE.ADMIN;
+        }
+        else if (dto.getRole().equals("SHOP")) {
+            role = ROLE.SHOP;
+        }
+        else role = ROLE.USER;
 
-        return new User(dto.getName(),dto.getSurname(), dto.getRole(),dto.getPhoneNumber(),dto.getEmail(),dto.getPassword(),dto.getBirtday(),dto.getTcNo(),null);
+        return new User(dto.getName(),dto.getSurname(),role,dto.getPhoneNumber(),dto.getEmail(),dto.getPassword(),dto.getBirtday(),dto.getTcNo(),null);
     }
 
 }

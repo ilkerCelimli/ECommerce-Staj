@@ -4,11 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +19,10 @@ public class Shopper extends BaseEntity{
     private long taxNumber;
     @OneToOne(fetch = FetchType.EAGER)
     private User user;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Adress adress;
+    @OneToMany(mappedBy = "shopper")
+    private List<Product> productList;
 
 
 }

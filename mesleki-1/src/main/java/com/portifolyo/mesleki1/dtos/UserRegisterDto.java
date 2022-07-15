@@ -19,7 +19,7 @@ public class UserRegisterDto {
     @Size(min = 3, max = 20, message = "surname must be between 3 and 20 characters")
 
     private String surname;
-    private ROLE role;
+    private String role;
     private String phoneNumber;
     @Email(message = "Email is not valid")
     private String email;
