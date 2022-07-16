@@ -17,14 +17,13 @@ import java.util.Optional;
 
 @Service
 public class ProductServiceImpl extends BaseServicesImpl<Product> implements ProductService {
-    private final UserServices userServices;
-    private final ShopperUpdateMapper shopperUpdateMapper;
+
+
     private final ProductRepository productRepository;
 
-    public ProductServiceImpl(UserServices userServices, ShopperUpdateMapper shopperUpdateMapper, ProductRepository productRepository) {
+    public ProductServiceImpl( ProductRepository productRepository) {
         super(productRepository);
-        this.userServices = userServices;
-        this.shopperUpdateMapper = shopperUpdateMapper;
+
         this.productRepository = productRepository;
     }
 

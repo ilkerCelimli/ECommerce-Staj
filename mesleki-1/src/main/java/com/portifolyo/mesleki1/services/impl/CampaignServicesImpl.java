@@ -7,12 +7,14 @@ import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.mappers.AddCampaignMapper;
 import com.portifolyo.mesleki1.repository.CampaignRepository;
+import com.portifolyo.mesleki1.repository.projections.CampaignInfo;
 import com.portifolyo.mesleki1.services.CampaignService;
 import com.portifolyo.mesleki1.services.ProductService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -31,8 +33,10 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
     }
 
     @Override
-    public Optional<Campaign> findCampaignProductId(String product, String shopper) {
-        return this.campaignRepository.findByProduct_IdEqualsAndProduct_Shopper_IdEquals(product, shopper);
+    public CampaignInfo findCampaignProductId(String product, String shopper) {
+        Optional<CampaignInfo> o = this.campaignRepository.findByProduct_IdEqualsAndProduct_Shopper_IdEqualsAndIsActiveTrue(product,shopper);
+        if(o.isPresent()) return o.get();
+        else throw new NotFoundException();
     }
 
     @Override
@@ -76,5 +80,10 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
             delete(o.get().getId());
             return true;
         } else throw new NotFoundException();
+    }
+
+    @Override
+    public List<CampaignInfo> findCampaigns() {
+        return this.campaignRepository.findByIsActiveTrueOrderByEndDateAsc();
     }
 }

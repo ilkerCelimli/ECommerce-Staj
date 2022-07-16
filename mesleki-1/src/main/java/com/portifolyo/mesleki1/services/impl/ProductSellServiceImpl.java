@@ -8,6 +8,7 @@ import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.mappers.AdressDtoMapper;
 import com.portifolyo.mesleki1.repository.OrderRepository;
+import com.portifolyo.mesleki1.repository.projections.CampaignInfo;
 import com.portifolyo.mesleki1.services.CampaignService;
 import com.portifolyo.mesleki1.services.ProductSellService;
 import com.portifolyo.mesleki1.services.ProductService;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements ProductSellService {
@@ -38,7 +38,7 @@ public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements 
 
     @Override
     public boolean sellProducts(SellProductsDto dto) throws SqlExceptionCustom {
-        Campaign c = checkCampaign(dto.getProductId(),dto.getShopperId());
+      /*  Campaign c = checkCampaign(dto.getProductId(),dto.getShopperId());
 
         Product p = productService.findProductForShopper(dto.getProductId(), dto.getShopperId());
         if(Objects.nonNull(c)) {
@@ -60,16 +60,13 @@ public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements 
             orders.setAdress(adressDtoMapper.toEntity(dto.getAdressDto()));
             save(orders);
             return true;
-        }
-
+        }*/
+return true;
     }
 
-    @Override
-    public Campaign checkCampaign(String product,String shopper ) {
-        Optional<Campaign> o = this.campaignService.findCampaignProductId(product,shopper);
-        if(o.isPresent()) {
-            return o.get();
-        }
-        else return null;
-    }
+  /*  @Override
+    public Campaign checkCampaign(String product, String shopper ) {
+        CampaignInfo o =  this.campaignService.findCampaignProductId(product,shopper);
+        return o;
+    }*/
 }

@@ -21,7 +21,7 @@ public class Shopper extends BaseEntity{
     private User user;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Adress adress;
-    @OneToMany(mappedBy = "shopper")
+    @OneToMany(mappedBy = "shopper",fetch = FetchType.EAGER)
     private List<Product> productList;
 
 
