@@ -8,7 +8,7 @@ import java.util.List;
 public interface BaseServices<T extends BaseEntity>{
 
     T save(T entity) throws SQLException;
-    T update(T entity) throws SQLException;
+    void update(T entity) throws SQLException;
     void delete(String id) throws SQLException;
     T findById(String id);
     List<T> findAll();

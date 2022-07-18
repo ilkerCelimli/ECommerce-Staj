@@ -6,7 +6,7 @@ public enum ROLE {
     USER("USER"),
     SHOP("SHOP");
 
-    String text;
+    final String text;
     ROLE(String text) {
         this.text = text;
     }

@@ -49,6 +49,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     }
 
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Override
     public boolean checkUserIsActivated(String email) {
         if (checkUserIsExists(email)) {
@@ -58,7 +59,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         } else throw new NotFoundException();
     }
 
-    @Override
+  /*  @Override
     public boolean checkUserEmailActivited(String email) {
         if (checkUserIsActivated(email)) {
             User u = this.userRepository.findUserByEmailEquals(email).get();
@@ -66,6 +67,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         } else return false;
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Override
     public boolean checkUserPassword(String email, String password) {
         if (checkUserIsActivated(email)) {
@@ -77,10 +79,10 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     @Override
     public boolean SendUserEmail(String email) {
         return false;
-    }
+    }*/
 
     @Override
-    public boolean userRegister(UserRegisterDto dto) throws SQLException {
+    public void userRegister(UserRegisterDto dto) throws SQLException {
         if (!checkUserIsExists(dto.getEmail())) {
             User u = this.userRegisterMapper.toEntity(dto);
             u.setActive(true);
@@ -96,7 +98,6 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
             Adress a = adressDtoMapper.toEntity(dto.getAdress());
             a.setUser(f);
             this.adressServices.save(a);
-            return true;
         } else throw new UserRegisterException();
     }
 
@@ -113,9 +114,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
 
     @Override //TODO Write This....
     public void resetPasswordRequest(String email) {
-        if (checkUserIsExists(email)) {
 
-        }
     }
 
     //TODO UpdateUser refactor
@@ -139,7 +138,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
             dto.setSurname(u.getSurname());
         }
         //  u.setUpdatedAt(new Date());
-        User f = update(u);
+        update(u);
 
         log.info("Kullanıcı güncellendi {} {}", u.getId(), u.getUpdatedAt());
         return true;

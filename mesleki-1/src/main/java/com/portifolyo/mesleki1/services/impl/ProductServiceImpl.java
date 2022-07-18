@@ -35,7 +35,7 @@ public class ProductServiceImpl extends BaseServicesImpl<Product> implements Pro
     public List<ProductInfo> productInfo(String shopperId) {
        List<Product> list = this.productRepository.findProductInfo(shopperId);
        List<ProductInfo> infoList = new ArrayList<>();
-       list.stream().forEach(i -> infoList.add(productInfoMapper.productInfo(i)));
+       list.forEach(i -> infoList.add(productInfoMapper.productInfo(i)));
        return infoList;
     }
 

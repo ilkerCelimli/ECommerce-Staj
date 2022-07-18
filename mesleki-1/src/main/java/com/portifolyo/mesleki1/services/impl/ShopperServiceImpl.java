@@ -52,7 +52,7 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     }
 
     @Override
-    public boolean addProduct(AddProductDto dto) throws SQLException {
+    public void addProduct(AddProductDto dto) throws SQLException {
 
         if (!checkProductIsExist(dto.getProductName(),dto.getShopperId())) {
             Categories categories = categoriesService.findById(dto.getCategoriesId());
@@ -61,7 +61,6 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
             product.setShopper(shopper);
             product.setCategories(categories);
             productService.save(product);
-            return true;
         } else throw new DataIsExistsException();
     }
 
@@ -71,7 +70,7 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     }
 
     @Override
-    public boolean updateProduct(AddProductDto dto) throws SQLException {
+    public void updateProduct(AddProductDto dto) throws SQLException {
         Product p = this.productService.findProductForShopper(dto.getProductName(), dto.getShopperId());
         if (Objects.nonNull(dto.getProductName()) || !Strings.isBlank(dto.getProductName()) || Strings.isEmpty(dto.getProductName())) {
             p.setName(dto.getProductName());
@@ -84,7 +83,7 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
             p.setPrice(dto.getPrice());
         }
         this.productService.update(p);
-        return true;
+
     }
 
     @Override
@@ -109,24 +108,21 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     }
 
     @Override
-    public boolean deleteProduct(String id) throws SQLException {
+    public void deleteProduct(String id) throws SQLException {
         this.productService.delete(id);
-        return true;
+
     }
 
     @Override
     //TODO Adres güncelleme düzenlenicek
-    public boolean updateShopper(ShopperUpdateDto dto) {
+    public void updateShopper(ShopperUpdateDto dto) {
         Optional<Shopper> o = this.shopperRepository.findByUser_IdEquals(dto.getUserId());
         o.ifPresentOrElse(i -> {
 
             if (Objects.nonNull(dto.getName()) || !Strings.isEmpty(dto.getName()) || !Strings.isBlank(dto.getName())) {
                 i.setName(dto.getName());
             }
-        /*    if (Objects.nonNull(dto.getAdressDto())) {
 
-
-            }*/
             if (dto.getTaxNumber() != 0L) {
                 i.setTaxNumber(dto.getTaxNumber());
             }
@@ -136,7 +132,7 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
                 e.printStackTrace();
             }
         }, NotFoundException::new);
-        return true;
+
     }
 
 

@@ -34,12 +34,11 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
     @Override
     public CampaignInfo findCampaignProductId(String product) {
         Optional<CampaignInfo> o = this.campaignRepository.findCampainForProduct(product);
-        if(o.isPresent()) return o.get();
-        else return null;
+        return o.orElse(null);
     }
 
     @Override
-    public boolean addCampaign(AddCampaignDto dto) throws SqlExceptionCustom {
+    public void addCampaign(AddCampaignDto dto) throws SqlExceptionCustom {
         Product p = productService.findProductForShopper(dto.getProductId(), dto.getShopperId());
         if (Objects.nonNull(p)) {
            Campaign c = addCampaignMapper.toEntity(dto);
@@ -47,12 +46,11 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
            c.setProduct(p);
            save(c);
 
-            return true;
         } else throw new NotFoundException();
     }
 
     @Override
-    public boolean updateCampaign(AddCampaignDto dto) {
+    public void updateCampaign(AddCampaignDto dto) {
         Optional<Campaign> c = this.campaignRepository.findByProduct_IdEqualsAndProduct_Shopper_IdEquals(dto.getProductId(), dto.getShopperId());
         c.ifPresentOrElse(i -> {
             if (Objects.nonNull(dto.getStartDate())) {
@@ -72,16 +70,15 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
             } catch (SqlExceptionCustom e) {
                 e.printStackTrace();
             }
-        }, () -> new NotFoundException());
-        return true;
+        }, NotFoundException::new);
+
     }
 
     @Override
-    public boolean deleteCampaign(String productId, String shopperId) throws SqlExceptionCustom {
-        Optional<Campaign> o = this.campaignRepository.findByProduct_IdEqualsAndProduct_Shopper_IdEquals(productId, shopperId);
+    public void deleteCampaign(String productId) throws SqlExceptionCustom {
+        Optional<CampaignInfo> o =this.campaignRepository.findCampainForProduct(productId);
         if (o.isPresent()) {
             delete(o.get().getId());
-            return true;
         } else throw new NotFoundException();
     }
 

@@ -2,6 +2,7 @@ package com.portifolyo.mesleki1.api;
 
 import com.portifolyo.mesleki1.dtos.AddCampaignDto;
 import com.portifolyo.mesleki1.entity.Campaign;
+import com.portifolyo.mesleki1.entity.Product;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.repository.projections.projeciton.CampaignInfo;
 import com.portifolyo.mesleki1.services.CampaignService;
@@ -40,9 +41,9 @@ public class CampaignApi {
         return  ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/deleteCampaign/{productId}/{shopperId}")
-    public ResponseEntity deleteCapaign(@PathVariable("/productId") String productId,@PathVariable("shopperId") String shopperId) throws SqlExceptionCustom {
-        this.campaignService.deleteCampaign(productId,shopperId);
+    @DeleteMapping("/deleteCampaign/{productId}")
+    public ResponseEntity<Product> deleteCapaign(@PathVariable("productId") String productId) throws SqlExceptionCustom {
+        this.campaignService.deleteCampaign(productId);
         return ResponseEntity.ok().build();
     }
 

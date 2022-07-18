@@ -2,13 +2,10 @@ package com.portifolyo.mesleki1.api;
 
 import com.portifolyo.mesleki1.dtos.SellProductsDto;
 import com.portifolyo.mesleki1.entity.Orders;
-import com.portifolyo.mesleki1.enums.OrderStatus;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
-import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.services.ProductSellService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

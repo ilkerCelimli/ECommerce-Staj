@@ -1,19 +1,21 @@
 package com.portifolyo.mesleki1.entity;
 
-import com.portifolyo.mesleki1.entity.BaseEntity;
-import com.portifolyo.mesleki1.entity.City;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Country extends BaseEntity {
     private String code;
     private String country;
-     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
+     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<City> cities;
 
 

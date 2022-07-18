@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.domain.Sort;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +39,7 @@ public abstract class BaseServicesImpl<T extends BaseEntity> implements BaseServ
     }
 
     @Override
-    public T update(T entity) throws SqlExceptionCustom {
+    public void update(T entity) throws SqlExceptionCustom {
         Date after = entity.getUpdatedAt();
         entity.setUpdatedAt(new Date());
         T e = baseRepository.save(entity);
@@ -51,7 +50,6 @@ public abstract class BaseServicesImpl<T extends BaseEntity> implements BaseServ
         }
         else {
             log.info("Saved Entity {} {}" ,e.getId(),e.getCreatedAt() );
-            return e;
         }
     }
 

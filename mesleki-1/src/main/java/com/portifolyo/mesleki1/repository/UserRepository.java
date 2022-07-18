@@ -1,7 +1,6 @@
 package com.portifolyo.mesleki1.repository;
 
 import com.portifolyo.mesleki1.entity.User;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 

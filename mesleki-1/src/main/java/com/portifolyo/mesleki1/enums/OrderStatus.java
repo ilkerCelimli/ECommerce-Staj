@@ -6,7 +6,7 @@ public enum OrderStatus {
     TRANSPORT("transport"),
     WAS_DELIVERED("was_delivered");
 
-    private String text;
+     final String text;
 
      OrderStatus(String text) {
         this.text = text;

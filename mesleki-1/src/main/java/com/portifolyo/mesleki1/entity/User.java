@@ -1,19 +1,15 @@
 package com.portifolyo.mesleki1.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portifolyo.mesleki1.enums.ROLE;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Entity(name = "users")
 @Table(name = "users")
 public class User extends BaseEntity {

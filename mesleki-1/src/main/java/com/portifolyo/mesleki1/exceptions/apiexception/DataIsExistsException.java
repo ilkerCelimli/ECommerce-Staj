@@ -14,7 +14,7 @@ public class DataIsExistsException extends RuntimeException {
 
     @ExceptionHandler(DataIsExistsException.class)
     @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
-    public ResponseEntity DataIsExistException(Exception ex, WebRequest web) {
+    public ResponseEntity<Object> DataIsExistException(Exception ex, WebRequest web) {
         return ResponseEntity.unprocessableEntity().build();
     }
 

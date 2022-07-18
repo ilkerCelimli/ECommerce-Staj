@@ -18,11 +18,10 @@ public class CityServicesImpl extends BaseServicesImpl<City> implements CityServ
     }
 
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Override
     public City findByName(String name) {
-        if (checkCityNameIsExists(name)) {
-            return this.cityRepository.findCityByCityEquals(name).get();
-        }
+        if (checkCityNameIsExists(name)) return this.cityRepository.findCityByCityEquals(name).get();
         if (checkCityCodeIsExists(name)) {
             return this.cityRepository.findCityByCodeEquals(name).get();
         }

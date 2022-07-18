@@ -13,13 +13,13 @@ import java.util.List;
 public interface ShopperService extends BaseServices<Shopper>  {
 
     boolean shopperCheckandSave(User user) throws SqlExceptionCustom;
-    boolean addProduct(AddProductDto dto) throws SQLException;
+    void addProduct(AddProductDto dto) throws SQLException;
     boolean checkProductIsExist(String name,String id);
-    boolean updateProduct(AddProductDto dto) throws SQLException;
+    void updateProduct(AddProductDto dto) throws SQLException;
     List<ShopperInfo> findShoppers();
     ShopperInfo findShopper(String id);
-    boolean deleteProduct(String id) throws SQLException ;
-    boolean updateShopper(ShopperUpdateDto dto);
+    void deleteProduct(String id) throws SQLException ;
+    void updateShopper(ShopperUpdateDto dto);
 
 
 }

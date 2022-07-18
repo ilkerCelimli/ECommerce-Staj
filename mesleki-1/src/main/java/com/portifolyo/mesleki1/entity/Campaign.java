@@ -1,20 +1,16 @@
 package com.portifolyo.mesleki1.entity;
 
-import com.portifolyo.mesleki1.entity.BaseEntity;
-import com.portifolyo.mesleki1.entity.Product;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Inheritance(strategy = InheritanceType.JOINED)
-@Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@ToString
+@Getter
+@Setter
 public class Campaign extends BaseEntity {
 
     @Column

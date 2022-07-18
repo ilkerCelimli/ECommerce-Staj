@@ -1,21 +1,14 @@
 package com.portifolyo.mesleki1.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.portifolyo.mesleki1.entity.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.BatchSize;
-
+import lombok.*;
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-@Data
+@Getter
+@Setter
+@ToString
 public class Categories extends BaseEntity {
 
     private String name;

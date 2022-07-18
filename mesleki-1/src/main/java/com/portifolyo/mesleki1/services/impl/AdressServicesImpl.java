@@ -5,6 +5,8 @@ import com.portifolyo.mesleki1.repository.AdressRepository;
 import com.portifolyo.mesleki1.services.AdressServices;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdressServicesImpl extends BaseServicesImpl<Adress> implements AdressServices {
 
@@ -16,5 +18,8 @@ public class AdressServicesImpl extends BaseServicesImpl<Adress> implements Adre
     }
 
 
-
+    @Override
+    public List<Adress> findAdress(String userId) {
+        return this.adressRepository.findAdressByUserId(userId);
+    }
 }

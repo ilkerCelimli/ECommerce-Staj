@@ -1,11 +1,10 @@
 package com.portifolyo.mesleki1.repository;
 
 import com.portifolyo.mesleki1.entity.Categories;
-import com.portifolyo.mesleki1.repository.projections.projeciton.CampaignInfo;
 import com.portifolyo.mesleki1.repository.projections.projeciton.CategoriesInfo;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+
 import java.util.Optional;
 
 public interface CategoriesRepository extends BaseRepository<Categories> {

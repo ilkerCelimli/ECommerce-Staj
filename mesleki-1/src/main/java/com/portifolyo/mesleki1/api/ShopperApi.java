@@ -4,7 +4,6 @@ import com.portifolyo.mesleki1.dtos.AddCampaignDto;
 import com.portifolyo.mesleki1.dtos.AddProductDto;
 import com.portifolyo.mesleki1.dtos.SellProductsDto;
 import com.portifolyo.mesleki1.dtos.ShopperUpdateDto;
-import com.portifolyo.mesleki1.entity.Shopper;
 import com.portifolyo.mesleki1.enums.OrderStatus;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.repository.projections.projeciton.ShopperInfo;
@@ -38,7 +37,7 @@ public class ShopperApi {
         return ResponseEntity.ok().body(s);
     }
 
-    @PostMapping("/addProduct/{id}")
+    @PostMapping("/addProduct/")
     public ResponseEntity<ShopperInfo> addProduct(@RequestBody AddProductDto dto) throws SQLException {
         this.shopperService.addProduct(dto);
         return ResponseEntity.ok().build();
@@ -50,7 +49,7 @@ public class ShopperApi {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/deleteProduct")
+    @DeleteMapping("/deleteProduct/{id}")
     public ResponseEntity<ShopperInfo> deleteProduct(@PathVariable String id) throws SQLException {
         this.shopperService.deleteProduct(id);
         return ResponseEntity.ok().build();

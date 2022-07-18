@@ -1,16 +1,16 @@
 package com.portifolyo.mesleki1.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-@EqualsAndHashCode(callSuper = true)
 public class Adress extends BaseEntity {
     private String title;
     @OneToOne(cascade = CascadeType.ALL)

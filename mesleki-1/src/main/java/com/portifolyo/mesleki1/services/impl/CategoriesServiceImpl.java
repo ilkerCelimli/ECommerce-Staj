@@ -44,16 +44,16 @@ public class CategoriesServiceImpl extends BaseServicesImpl<Categories> implemen
 
 
     @Override
-    public boolean AddCategories(AddCategoriesDto dto) throws SqlExceptionCustom {
+    public void AddCategories(AddCategoriesDto dto) throws SqlExceptionCustom {
         if(!checkCategoriesIsExists(dto.getName())) {
             save(addCategoriesMapper.toEntity(dto));
-            return true;
+
         }
         else throw new DataIsExistsException();
     }
 
     @Override
-    public boolean updateCategories(String id ,AddCategoriesDto dto) throws SqlExceptionCustom {
+    public void updateCategories(String id ,AddCategoriesDto dto) throws SqlExceptionCustom {
        Categories categories = findById(id);
        if(Objects.nonNull(dto.getName()) || !Strings.isEmpty(dto.getName()) || !Strings.isBlank(dto.getName())) {
            categories.setName(dto.getName());
@@ -62,7 +62,7 @@ public class CategoriesServiceImpl extends BaseServicesImpl<Categories> implemen
            categories.setDescription(dto.getDescription());
        }
        update(categories);
-       return true;
+
     }
 
     @Override

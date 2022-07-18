@@ -5,7 +5,6 @@ import com.portifolyo.mesleki1.entity.Campaign;
 import com.portifolyo.mesleki1.utils.RandomString;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 
 @Component
 public class AddCampaignMapper {

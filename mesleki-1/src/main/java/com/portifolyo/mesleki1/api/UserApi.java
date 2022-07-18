@@ -2,15 +2,9 @@ package com.portifolyo.mesleki1.api;
 
 import com.portifolyo.mesleki1.dtos.UserRegisterDto;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
-import com.portifolyo.mesleki1.exceptions.apiexception.EmailActiviteException;
-import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
-import com.portifolyo.mesleki1.exceptions.apiexception.UserRegisterException;
 import com.portifolyo.mesleki1.services.UserServices;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.sql.SQLException;
 
 

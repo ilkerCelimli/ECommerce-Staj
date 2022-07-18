@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CampaignRepository extends BaseRepository<Campaign>{
-    Optional<Campaign> findByProduct_IdEquals(String id);
 
     Optional<Campaign> findByProduct_IdEqualsAndProduct_Shopper_IdEquals(String product, String shopper);
 

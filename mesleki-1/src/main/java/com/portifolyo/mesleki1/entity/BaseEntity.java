@@ -1,9 +1,6 @@
 package com.portifolyo.mesleki1.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,8 +12,10 @@ import java.util.Date;
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@EqualsAndHashCode(of = {"id"})
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
@@ -39,4 +38,6 @@ public abstract class BaseEntity {
     private boolean isActive;
     @Column
     private boolean isDeleted;
+
+
 }

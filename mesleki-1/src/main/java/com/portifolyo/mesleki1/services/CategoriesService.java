@@ -11,8 +11,8 @@ import java.util.List;
 public interface CategoriesService extends BaseServices<Categories>{
 
     boolean checkCategoriesIsExists(String name);
-    boolean AddCategories(AddCategoriesDto categories) throws SqlExceptionCustom;
-    boolean updateCategories(String id,AddCategoriesDto dto) throws SqlExceptionCustom;
+    void AddCategories(AddCategoriesDto categories) throws SqlExceptionCustom;
+    void updateCategories(String id,AddCategoriesDto dto) throws SqlExceptionCustom;
     CategoriesInfo findCategoriesInfo(String id);
     List<CategoriesApiInfo> findCategoriesInfoList();
 

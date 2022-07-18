@@ -15,7 +15,7 @@ public class NotFoundException extends RuntimeException {
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity NotFoundExceptionHandler(Exception ex, WebRequest web) throws NotFoundException{
+    public ResponseEntity<Object> NotFoundExceptionHandler(Exception ex, WebRequest web) throws NotFoundException{
         return ResponseEntity.noContent().build();
     }
 

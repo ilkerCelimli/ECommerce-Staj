@@ -10,10 +10,10 @@ public interface UserServices extends BaseServices<User> {
 
     boolean checkUserIsExists(String email);
     boolean checkUserIsActivated(String email);
-    boolean checkUserEmailActivited(String email);
+   /* boolean checkUserEmailActivited(String email);
     boolean checkUserPassword(String email, String password);
-    boolean SendUserEmail(String email);
-    boolean userRegister(UserRegisterDto dto) throws SQLException;
+    boolean SendUserEmail(String email);*/
+    void userRegister(UserRegisterDto dto) throws SQLException;
     boolean activiteEmail(String code) throws SQLException;
     void resetPasswordRequest(String email);
     boolean updateUser(String id,UserRegisterDto dto) throws SqlExceptionCustom;

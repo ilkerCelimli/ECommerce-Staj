@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface CampaignService extends BaseServices<Campaign>{
 
-    boolean addCampaign(AddCampaignDto dto) throws SqlExceptionCustom;
-    boolean updateCampaign(AddCampaignDto dto);
-    boolean deleteCampaign(String productId,String shopperId) throws SqlExceptionCustom;
+    void addCampaign(AddCampaignDto dto) throws SqlExceptionCustom;
+    void updateCampaign(AddCampaignDto dto);
+    void deleteCampaign(String productId) throws SqlExceptionCustom;
      List<CampaignInfo> findCampaigns();
      CampaignInfo findCampaignProductId(String product);
 }

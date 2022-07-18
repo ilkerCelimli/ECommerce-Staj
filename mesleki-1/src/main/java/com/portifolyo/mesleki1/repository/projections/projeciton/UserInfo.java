@@ -3,6 +3,8 @@ package com.portifolyo.mesleki1.repository.projections.projeciton;
 import com.portifolyo.mesleki1.dtos.AdressDto;
 import com.portifolyo.mesleki1.enums.ROLE;
 
+import java.util.List;
+
 public record UserInfo(
         String id,
         String name,
@@ -11,7 +13,7 @@ public record UserInfo(
         String phoneNumber,
         String email,
         long TcNo,
-        AdressDto adressDto
+        List<AdressDto> adressDto
 ) {
 
 
