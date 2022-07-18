@@ -15,7 +15,6 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 

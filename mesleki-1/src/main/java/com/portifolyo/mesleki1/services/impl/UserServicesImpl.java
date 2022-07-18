@@ -17,8 +17,11 @@ import com.portifolyo.mesleki1.services.UserServices;
 import com.portifolyo.mesleki1.utils.RandomString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
@@ -33,14 +36,16 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     private final AdressServices adressServices;
     private final AdressDtoMapper adressDtoMapper;
     private final ShopperService shopperService;
+    private final JavaMailSender javaMailSender;
 
-    public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper, AdressServices adressServices, AdressDtoMapper adressDtoMapper, ShopperService shopperService) {
+    public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper, AdressServices adressServices, AdressDtoMapper adressDtoMapper, ShopperService shopperService, JavaMailSender javaMailSender) {
         super(userRepository);
         this.userRepository = userRepository;
         this.userRegisterMapper = userRegisterMapper;
         this.adressServices = adressServices;
         this.adressDtoMapper = adressDtoMapper;
         this.shopperService = shopperService;
+        this.javaMailSender = javaMailSender;
     }
 
     @Override
@@ -59,27 +64,20 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         } else throw new NotFoundException();
     }
 
-  /*  @Override
-    public boolean checkUserEmailActivited(String email) {
-        if (checkUserIsActivated(email)) {
-            User u = this.userRepository.findUserByEmailEquals(email).get();
-            return u.isEmailActivated();
-        } else return false;
+    @Override
+    public boolean SendUserEmail(String email) throws MessagingException {
+
+        MimeMessage mime = javaMailSender.createMimeMessage();
+        mime.setFrom(new InternetAddress("Meloonia52@gmail.com"));
+        mime.setRecipient(Message.RecipientType.TO,new InternetAddress("ilker-7@hotmail.com"));
+        mime.setSubject("Test email");
+        mime.setText("localhost:8080/api/user/activitemail/ZovxxqALp8ndYGUswwwfL");
+        javaMailSender.send(mime);
+
+        return true;
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    @Override
-    public boolean checkUserPassword(String email, String password) {
-        if (checkUserIsActivated(email)) {
-            User u = this.userRepository.findUserByEmailEquals(email).get();
-            return u.getPassword().equals(password);
-        } else return false;
-    }
 
-    @Override
-    public boolean SendUserEmail(String email) {
-        return false;
-    }*/
 
     @Override
     public void userRegister(UserRegisterDto dto) throws SQLException {
@@ -137,7 +135,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         if (!Strings.isBlank(dto.getSurname()) || !Strings.isEmpty(dto.getSurname()) || !Objects.isNull(dto.getSurname())) {
             dto.setSurname(u.getSurname());
         }
-        //  u.setUpdatedAt(new Date());
+
         update(u);
 
         log.info("Kullanıcı güncellendi {} {}", u.getId(), u.getUpdatedAt());

@@ -4,6 +4,7 @@ import com.portifolyo.mesleki1.dtos.UserRegisterDto;
 import com.portifolyo.mesleki1.entity.User;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 
+import javax.mail.MessagingException;
 import java.sql.SQLException;
 
 public interface UserServices extends BaseServices<User> {
@@ -11,8 +12,8 @@ public interface UserServices extends BaseServices<User> {
     boolean checkUserIsExists(String email);
     boolean checkUserIsActivated(String email);
    /* boolean checkUserEmailActivited(String email);
-    boolean checkUserPassword(String email, String password);
-    boolean SendUserEmail(String email);*/
+    boolean checkUserPassword(String email, String password); */
+    boolean SendUserEmail(String email) throws MessagingException;
     void userRegister(UserRegisterDto dto) throws SQLException;
     boolean activiteEmail(String code) throws SQLException;
     void resetPasswordRequest(String email);

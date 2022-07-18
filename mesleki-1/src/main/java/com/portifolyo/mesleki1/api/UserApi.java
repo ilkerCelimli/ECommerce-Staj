@@ -5,6 +5,8 @@ import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.services.UserServices;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 import java.sql.SQLException;
 
 
@@ -19,6 +21,12 @@ public class UserApi {
         this.userServices = userServicesImpl;
     }
 
+
+    @GetMapping("/sendMail")
+    public ResponseEntity<Object> sendMail() throws MessagingException {
+        this.userServices.SendUserEmail("ilker-7@hotmail.com");
+        return ResponseEntity.accepted().build();
+    }
 
     @PostMapping("/registerUser")
     public ResponseEntity registerUser(@RequestBody UserRegisterDto userRegisterDto) throws SQLException {

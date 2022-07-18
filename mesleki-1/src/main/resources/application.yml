@@ -8,4 +8,19 @@ spring:
       ddl-auto: update
     open-in-view: false
     show-sql: true
+  mail:
+    host: smtp.gmail.com
+    username: Meloonia52@gmail.com
+    password: knxlunkzdwsfatxj #knxlunkzdwsfatxj
+    port: 587
+    properties:
+      mail:
+        stmp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            required: true
+            enabled: true
+
 
