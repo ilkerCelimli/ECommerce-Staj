@@ -11,7 +11,9 @@ import com.portifolyo.mesleki1.exceptions.apiexception.DataIsExistsException;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.mappers.AddProductMapper;
 import com.portifolyo.mesleki1.repository.ShopperRepository;
-import com.portifolyo.mesleki1.repository.projections.ShopperInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.ProductInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.ShopperInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.converters.ShopperInfoMapper;
 import com.portifolyo.mesleki1.services.CategoriesService;
 import com.portifolyo.mesleki1.services.ProductService;
 import com.portifolyo.mesleki1.services.ShopperService;
@@ -19,9 +21,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements ShopperService {
@@ -30,13 +30,15 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     private final ShopperRepository shopperRepository;
     private final CategoriesService categoriesService;
     private final ProductService productService;
+    private final ShopperInfoMapper shopperInfoMapper;
 
-    public ShopperServiceImpl(AddProductMapper addProductMapper, ShopperRepository shopperRepository, CategoriesService categoriesService, ProductService productService) {
+    public ShopperServiceImpl(AddProductMapper addProductMapper, ShopperRepository shopperRepository, CategoriesService categoriesService, ProductService productService, ShopperInfoMapper shopperInfoMapper) {
         super(shopperRepository);
         this.addProductMapper = addProductMapper;
         this.shopperRepository = shopperRepository;
         this.categoriesService = categoriesService;
         this.productService = productService;
+        this.shopperInfoMapper = shopperInfoMapper;
     }
 
 
@@ -50,22 +52,22 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     }
 
     @Override
-    public boolean addProduct(AddProductDto dto) throws SqlExceptionCustom {
+    public boolean addProduct(AddProductDto dto) throws SQLException {
 
-        if (checkProductIsExist(dto.getProductName())) {
+        if (!checkProductIsExist(dto.getProductName(),dto.getShopperId())) {
             Categories categories = categoriesService.findById(dto.getCategoriesId());
             Shopper shopper = findById(dto.getShopperId());
             Product product = addProductMapper.toEntity(dto);
             product.setShopper(shopper);
             product.setCategories(categories);
-            save(shopper);
+            productService.save(product);
             return true;
         } else throw new DataIsExistsException();
     }
 
     @Override
-    public boolean checkProductIsExist(String name) {
-        return this.shopperRepository.existsByProductList_NameEquals(name);
+    public boolean checkProductIsExist(String name,String id) {
+        return this.productService.checkProductsForShopper(name,id);
     }
 
     @Override
@@ -87,15 +89,23 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
 
     @Override
     public List<ShopperInfo> findShoppers() {
-        return this.shopperRepository.findByIsActiveAndIsDeleted(true, false);
+        List<Shopper> list = findAll();
+        List<ShopperInfo> shopper = new ArrayList<>();
+        list.forEach(i -> {
+            List<ProductInfo> l = productService.productInfo(i.getId());
+            shopper.add(shopperInfoMapper.toDto(i,l));
+        });
+        return shopper;
     }
 
     @Override
     public ShopperInfo findShopper(String id) {
-        Optional<ShopperInfo> o = this.shopperRepository.findShopperByIdEquals(id);
-
-        o.orElseThrow(() -> new NotFoundException());
-        return o.get();
+        Optional<Shopper> s = this.shopperRepository.findById(id);
+        List<ProductInfo> list = productService.productInfo(id);
+        if(s.isPresent()) {
+            return shopperInfoMapper.toDto(s.get(),list);
+        }
+        else throw new NotFoundException();
     }
 
     @Override
@@ -113,10 +123,11 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
             if (Objects.nonNull(dto.getName()) || !Strings.isEmpty(dto.getName()) || !Strings.isBlank(dto.getName())) {
                 i.setName(dto.getName());
             }
-            if (Objects.nonNull(dto.getAdressDto())) {
+        /*    if (Objects.nonNull(dto.getAdressDto())) {
 
-            }
-            if (Objects.nonNull(dto.getTaxNumber()) || dto.getTaxNumber() != 0L) {
+
+            }*/
+            if (dto.getTaxNumber() != 0L) {
                 i.setTaxNumber(dto.getTaxNumber());
             }
             try {
@@ -124,10 +135,9 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
             } catch (SqlExceptionCustom e) {
                 e.printStackTrace();
             }
-        }, () -> new NotFoundException());
+        }, NotFoundException::new);
         return true;
     }
-
 
 
 

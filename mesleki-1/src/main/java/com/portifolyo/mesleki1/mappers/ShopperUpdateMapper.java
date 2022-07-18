@@ -22,8 +22,9 @@ public class ShopperUpdateMapper {
         User u = userServices.findById(dto.getUserId());
         Adress adress = adressDtoMapper.toEntity(dto.getAdressDto());
         Shopper s = new Shopper();
+
         s.setUser(u);
-        s.setAdress(adress);
+       // s.getUser().setAdressList(adress);
         s.setActive(false);
         s.setName(dto.getName());
         s.setTaxNumber(dto.getTaxNumber());

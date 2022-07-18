@@ -1,11 +1,15 @@
 package com.portifolyo.mesleki1.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portifolyo.mesleki1.enums.ROLE;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -37,8 +41,6 @@ public class User extends BaseEntity {
   @Column
   private String activitionCode;
 
-  @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-  private List<Adress> adressList;
 
   public User(String name, String surname, ROLE role, String phoneNumber, String email, String password, Date birtday, long tcNo, String activitionCode) {
     this.name = name;

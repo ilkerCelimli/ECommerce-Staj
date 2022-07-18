@@ -1,9 +1,15 @@
 package com.portifolyo.mesleki1.api;
 
+import com.portifolyo.mesleki1.dtos.AddCampaignDto;
 import com.portifolyo.mesleki1.dtos.AddProductDto;
+import com.portifolyo.mesleki1.dtos.SellProductsDto;
 import com.portifolyo.mesleki1.dtos.ShopperUpdateDto;
+import com.portifolyo.mesleki1.entity.Shopper;
+import com.portifolyo.mesleki1.enums.OrderStatus;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
-import com.portifolyo.mesleki1.repository.projections.ShopperInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.ShopperInfo;
+import com.portifolyo.mesleki1.services.CampaignService;
+import com.portifolyo.mesleki1.services.ProductSellService;
 import com.portifolyo.mesleki1.services.ShopperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +24,12 @@ import java.util.List;
 public class ShopperApi {
 
     private final ShopperService shopperService;
-
+    private final CampaignService campaignService;
+    private final ProductSellService productSellService;
 
     @GetMapping("/findShoppers")
     public ResponseEntity<List<ShopperInfo>> findAllShoppers() {
-        return ResponseEntity.ok().body(this.shopperService.findShoppers());
+        return ResponseEntity.ok(this.shopperService.findShoppers());
     }
 
     @GetMapping("/findShoppersProducts/{id}")
@@ -32,7 +39,7 @@ public class ShopperApi {
     }
 
     @PostMapping("/addProduct/{id}")
-    public ResponseEntity<ShopperInfo> addProduct(@RequestBody AddProductDto dto) throws SqlExceptionCustom {
+    public ResponseEntity<ShopperInfo> addProduct(@RequestBody AddProductDto dto) throws SQLException {
         this.shopperService.addProduct(dto);
         return ResponseEntity.ok().build();
     }
@@ -62,5 +69,16 @@ public class ShopperApi {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/addCampaign")
+    public ResponseEntity<ShopperInfo> addCampaign(@RequestBody AddCampaignDto dto) throws SqlExceptionCustom {
+        this.campaignService.addCampaign(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/ChangeOrderStatus/{orderId}")
+    public ResponseEntity<SellProductsDto> changeOrderStatus(@PathVariable String orderId, @RequestBody OrderStatus orderStatus) throws SqlExceptionCustom {
+        this.productSellService.ChangeOrderStatus(orderId,orderStatus);
+        return ResponseEntity.ok().build();
+    }
 
 }

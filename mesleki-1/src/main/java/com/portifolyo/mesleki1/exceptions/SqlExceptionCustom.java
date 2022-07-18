@@ -11,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.sql.SQLException;
 
 @RestControllerAdvice
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class SqlExceptionCustom extends SQLException {
 
     public SqlExceptionCustom() {

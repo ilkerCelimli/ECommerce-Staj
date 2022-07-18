@@ -1,15 +1,14 @@
 package com.portifolyo.mesleki1.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portifolyo.mesleki1.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -21,8 +20,8 @@ public class Categories extends BaseEntity {
 
     private String name;
     private String description;
-    @OneToMany(mappedBy = "categories")
-    private List<Product> products;
+
+
 
     public Categories(String name , String description) {
         this.name = name;

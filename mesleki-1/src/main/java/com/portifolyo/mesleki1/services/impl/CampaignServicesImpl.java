@@ -7,13 +7,12 @@ import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.mappers.AddCampaignMapper;
 import com.portifolyo.mesleki1.repository.CampaignRepository;
-import com.portifolyo.mesleki1.repository.projections.CampaignInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.CampaignInfo;
 import com.portifolyo.mesleki1.services.CampaignService;
 import com.portifolyo.mesleki1.services.ProductService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -33,17 +32,21 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
     }
 
     @Override
-    public CampaignInfo findCampaignProductId(String product, String shopper) {
-        Optional<CampaignInfo> o = this.campaignRepository.findByProduct_IdEqualsAndProduct_Shopper_IdEqualsAndIsActiveTrue(product,shopper);
+    public CampaignInfo findCampaignProductId(String product) {
+        Optional<CampaignInfo> o = this.campaignRepository.findCampainForProduct(product);
         if(o.isPresent()) return o.get();
-        else throw new NotFoundException();
+        else return null;
     }
 
     @Override
     public boolean addCampaign(AddCampaignDto dto) throws SqlExceptionCustom {
         Product p = productService.findProductForShopper(dto.getProductId(), dto.getShopperId());
         if (Objects.nonNull(p)) {
-            save(addCampaignMapper.toEntity(dto));
+           Campaign c = addCampaignMapper.toEntity(dto);
+           c.setActive(true);
+           c.setProduct(p);
+           save(c);
+
             return true;
         } else throw new NotFoundException();
     }
@@ -84,6 +87,6 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
 
     @Override
     public List<CampaignInfo> findCampaigns() {
-        return this.campaignRepository.findByIsActiveTrueOrderByEndDateAsc();
+        return this.campaignRepository.findCampaigns();
     }
 }

@@ -1,5 +1,7 @@
 package com.portifolyo.mesleki1;
 
+import org.aspectj.bridge.ReflectionFactory;
+import org.aspectj.util.Reflection;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.mail.MailSender;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.util.ReflectionUtils;
 
 @SpringBootApplication
 @EnableTransactionManagement

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 @EqualsAndHashCode(callSuper = true)
 public class Adress extends BaseEntity {
-
+    private String title;
     @OneToOne(cascade = CascadeType.ALL)
     private City city;
     @Column
@@ -23,8 +23,8 @@ public class Adress extends BaseEntity {
     private String ilce;
     @Column
     private String binaNo;
-
     @ManyToOne
     private User user;
+
 
 }

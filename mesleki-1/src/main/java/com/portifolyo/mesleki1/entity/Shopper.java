@@ -1,8 +1,10 @@
 package com.portifolyo.mesleki1.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,10 +21,6 @@ public class Shopper extends BaseEntity{
     private long taxNumber;
     @OneToOne(fetch = FetchType.EAGER)
     private User user;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private Adress adress;
-    @OneToMany(mappedBy = "shopper",fetch = FetchType.EAGER)
-    private List<Product> productList;
 
 
 }

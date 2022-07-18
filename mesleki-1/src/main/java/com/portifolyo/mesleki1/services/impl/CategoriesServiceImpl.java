@@ -7,11 +7,16 @@ import com.portifolyo.mesleki1.exceptions.apiexception.DataIsExistsException;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.mappers.AddCategoriesMapper;
 import com.portifolyo.mesleki1.repository.CategoriesRepository;
-import com.portifolyo.mesleki1.repository.projections.CategoriesAndProductsInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.CategoriesApiInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.CategoriesInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.ProductInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.converters.CategoriesApiInfoMapper;
 import com.portifolyo.mesleki1.services.CategoriesService;
+import com.portifolyo.mesleki1.services.ProductService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,12 +26,15 @@ public class CategoriesServiceImpl extends BaseServicesImpl<Categories> implemen
 
     private final CategoriesRepository categoriesRepository;
     private final AddCategoriesMapper addCategoriesMapper;
+    private final CategoriesApiInfoMapper categoriesApiInfoMapper;
+    private final ProductService productService;
 
-
-    public CategoriesServiceImpl(CategoriesRepository categoriesRepository, AddCategoriesMapper addCategoriesMapper) {
+    public CategoriesServiceImpl(CategoriesRepository categoriesRepository, AddCategoriesMapper addCategoriesMapper, CategoriesApiInfoMapper categoriesApiInfoMapper, ProductService productService) {
         super(categoriesRepository);
         this.categoriesRepository = categoriesRepository;
         this.addCategoriesMapper = addCategoriesMapper;
+        this.categoriesApiInfoMapper = categoriesApiInfoMapper;
+        this.productService = productService;
     }
 
     @Override
@@ -34,21 +42,10 @@ public class CategoriesServiceImpl extends BaseServicesImpl<Categories> implemen
         return this.categoriesRepository.existsCategoriesByNameEquals(name);
     }
 
-    @Override
-    public List<CategoriesAndProductsInfo> findProductsInCategories() {
-        return this.categoriesRepository.findByIsActiveAndIsDeleted(true,false);
-    }
-
-    @Override
-    public CategoriesAndProductsInfo findCategorieAndProducts(String id) {
-        Optional<CategoriesAndProductsInfo> o = this.categoriesRepository.findByIdEqualsAndIsActiveTrueAndIsDeletedFalse(id);
-        o.orElseThrow(() -> new NotFoundException());
-        return o.get();
-    }
 
     @Override
     public boolean AddCategories(AddCategoriesDto dto) throws SqlExceptionCustom {
-        if(checkCategoriesIsExists(dto.getName())) {
+        if(!checkCategoriesIsExists(dto.getName())) {
             save(addCategoriesMapper.toEntity(dto));
             return true;
         }
@@ -66,6 +63,29 @@ public class CategoriesServiceImpl extends BaseServicesImpl<Categories> implemen
        }
        update(categories);
        return true;
+    }
+
+    @Override
+    public CategoriesInfo findCategoriesInfo(String id) {
+        Optional<CategoriesInfo> categoriesInfo = this.categoriesRepository.findCategories(id);
+        if(categoriesInfo.isPresent()) {
+            return categoriesInfo.get();
+        }
+        else throw new NotFoundException();
+    }
+
+    @Override
+    public List<CategoriesApiInfo> findCategoriesInfoList() {
+        List<CategoriesApiInfo> list = new ArrayList<>();
+        List<Categories> l = findAll();
+        l.forEach(i -> list.add(categoriesApiInfoMapper.toDto(i,productService.findProductsForCategories(i.getId()))));
+        return list;
+    }
+
+    public CategoriesApiInfo findCategoriesById(String id) {
+        Categories c =findById(id);
+        List<ProductInfo> productInfo = productService.findProductsForCategories(id);
+        return categoriesApiInfoMapper.toDto(c,productInfo);
     }
 
 

@@ -3,7 +3,7 @@ package com.portifolyo.mesleki1.api;
 import com.portifolyo.mesleki1.dtos.AddCampaignDto;
 import com.portifolyo.mesleki1.entity.Campaign;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
-import com.portifolyo.mesleki1.repository.projections.CampaignInfo;
+import com.portifolyo.mesleki1.repository.projections.projeciton.CampaignInfo;
 import com.portifolyo.mesleki1.services.CampaignService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +24,9 @@ public class CampaignApi {
         return ResponseEntity.ok().body(campaignService.findCampaigns());
     }
 
-    @GetMapping("/findCampaignsByProduct/{product}/{shopper}")
-    public ResponseEntity<CampaignInfo> findCampaignsByProduct(@PathVariable("product") String product, @PathVariable("shopper") String shopperId){
-       return ResponseEntity.ok().body( this.campaignService.findCampaignProductId(product,shopperId));
+    @GetMapping("/findCampaignsByProduct/{product}")
+    public ResponseEntity<CampaignInfo> findCampaignsByProduct(@PathVariable("product") String product){
+       return ResponseEntity.ok().body( this.campaignService.findCampaignProductId(product));
     }
 
     @PostMapping("/addCampaign")
