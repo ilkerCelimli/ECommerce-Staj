@@ -35,13 +35,12 @@ export const Navbar = (props) => {
     const onSubmit = (data) => {
         console.log(data)
         action(login(data))
-
-
     }
 
     const handleLogOut= () => {
         action(logout())
     }
+
 
     const handleLogin = (e) => {
         setAnchorElLogin(e.currentTarget);
@@ -60,6 +59,12 @@ export const Navbar = (props) => {
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
+
+    const handleUserLogout = () => {
+        handleLogOut();
+        setAnchorElUser(null);
+        setAnchorElLogin(null);
+    }
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -186,7 +191,7 @@ export const Navbar = (props) => {
                                         <Typography textAlign="center">Sepetim{` ${basket.count}`}</Typography>
                                     </MenuItem>
 
-                                    <MenuItem  onClick={handleCloseUserMenu}>
+                                    <MenuItem  onClick={handleUserLogout}>
                                         <Typography textAlign="center">Çıkış yap</Typography>
                                     </MenuItem>
 
@@ -236,12 +241,12 @@ export const Navbar = (props) => {
                                         <TextField required id = {"outlined-required"} label = {"Şifre"} onChange={handleChange} {...register("password")}/>
                                     </MenuItem>
 
-                                        <MenuItem>
-                                            <Button type={"submit"} color={"primary"}>Giriş yap</Button>
+                                        <MenuItem type={"submit"} onClick={handleSubmit(onSubmit)} style = {{justifyContent:'center'}}>
+                                            <Typography textAlign="center">Giriş yap</Typography>
                                         </MenuItem>
 
-                                        <MenuItem>
-                                            <Button>Kayıt ol</Button>
+                                        <MenuItem  onClick={handleCloseUserMenu} style={{justifyContent:'center'}}>
+                                            <Typography textAlign="center">Kayıt ol</Typography>
                                         </MenuItem>
 
 
