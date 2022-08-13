@@ -8,7 +8,7 @@ import java.util.List;
 public interface AdressServices extends BaseServices<Adress> {
 
     List<Adress> findAdress(String userId);
-    Adress findAdressByTitleAndUserId(String title,String userId);
-    City findByCityId(String id);
+    Adress findAdressByTitleAndUserId(String userId);
+    City findByCityId(int id);
 
 }

@@ -9,13 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdressDto {
 
-    private String title;
-    private String CountryId;
-    private String cityId;
-    private String cityName;
-    private String mahalle;
-    private String sokak;
-    private String ilce;
-    private String binaNo;
+    private int CityId;
+    private String adress;
 
 }

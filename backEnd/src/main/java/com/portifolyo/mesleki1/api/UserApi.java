@@ -1,5 +1,6 @@
 package com.portifolyo.mesleki1.api;
 
+import com.portifolyo.mesleki1.dtos.LoginDto;
 import com.portifolyo.mesleki1.dtos.UserRegisterDto;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import com.portifolyo.mesleki1.services.UserServices;
@@ -22,6 +23,11 @@ public class UserApi {
         this.userServices = userServicesImpl;
     }
 
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(LoginDto dto) {
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/sendMail")
     public ResponseEntity<Object> sendMail() throws MessagingException {

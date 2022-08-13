@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class CategoriesInfoMapper {
 
     public CategoriesInfo toDto(Categories categories) {
-        return new CategoriesInfo(categories.getId(),categories.getName(), categories.getDescription());
+        return new CategoriesInfo(categories.getId(),categories.getName(), categories.getDescription(),categories.getImage());
     }
 
 }

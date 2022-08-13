@@ -25,8 +25,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.sql.SQLException;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -53,6 +52,15 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     @Override
     public boolean checkUserIsExists(String email) {
         return this.userRepository.existsUserByEmail(email);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        Optional<User> o = this.userRepository.findUserByEmailEquals(email);
+      if(o.isPresent()) {
+          return o.get();
+      }
+      else throw new NotFoundException();
     }
 
 
@@ -140,38 +148,20 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         if (Objects.nonNull(dto.getBirtday())) {
             u.setBirtday(dto.getBirtday());
         }
-        if ((Objects.nonNull(dto.getAdress()) && Objects.nonNull(dto.getAdress().getTitle())) && (!Strings.isBlank(dto.getAdress().getTitle()) || !Strings.isEmpty(dto.getAdress().getTitle()))) {
+      /*  if ((Objects.nonNull(dto.getAdress()){
 
-            Adress a = adressServices.findAdressByTitleAndUserId(dto.getAdress().getTitle(), u.getId());
+            Adress a = adressServices.findAdressByTitleAndUserId( u.getId());
             AdressDto s = dto.getAdress();
-            if (Objects.nonNull(s.getBinaNo()) || !Strings.isEmpty(s.getBinaNo()) || !Strings.isBlank(s.getBinaNo())) {
-                a.setBinaNo(s.getBinaNo());
-            }
-            if (Objects.nonNull(s.getCityId()) || !Strings.isBlank(s.getCityId()) || !Strings.isEmpty(s.getCityId())) {
-                a.setCity(adressServices.findByCityId(id));
-            }
 
-            if (Objects.nonNull(s.getIlce()) || !Strings.isEmpty(s.getIlce()) || !Strings.isBlank(s.getIlce())) {
-                a.setIlce(s.getIlce());
-            }
-
-            if (Objects.nonNull(s.getMahalle()) || !Strings.isBlank(s.getMahalle()) || !Strings.isEmpty(s.getMahalle())) {
-                a.setMahalle(s.getMahalle());
-            }
-
-            if (Objects.nonNull(s.getSokak()) || !Strings.isEmpty(s.getSokak()) || !Strings.isBlank(s.getSokak())) {
-                a.setSokak(s.getSokak());
+            if (Objects.nonNull(s.getAdress()) || !Strings.isBlank(s.getAdress()) || !Strings.isEmpty(s.getAdress())) {
+                a.setAdress(s.getAdress());
             }
             this.adressServices.update(a);
-
-        }
-
+        }*/
         update(u);
 
         log.info("Kullanıcı güncellendi {} {}", u.getId(), u.getUpdatedAt());
         return true;
-
-
     }
 
     @Override
@@ -180,4 +170,5 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         u.setPassword(password);
         save(u);
     }
+
 }

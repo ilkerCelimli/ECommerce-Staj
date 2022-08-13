@@ -7,9 +7,10 @@ import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
 import javax.mail.MessagingException;
 import java.sql.SQLException;
 
-public interface UserServices extends BaseServices<User> {
+public interface UserServices extends BaseServices<User>{
 
     boolean checkUserIsExists(String email);
+    User findByEmail(String email);
     boolean checkUserIsActivated(String email);
    /* boolean checkUserEmailActivited(String email);
     boolean checkUserPassword(String email, String password); */

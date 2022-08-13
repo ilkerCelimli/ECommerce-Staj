@@ -16,5 +16,6 @@ public class AddProductDto {
     private String productName;
     private String Description;
     private BigDecimal price;
+    private byte[] image;
 
 }

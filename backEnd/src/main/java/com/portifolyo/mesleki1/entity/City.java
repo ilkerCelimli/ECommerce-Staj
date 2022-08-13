@@ -4,19 +4,20 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Inheritance(strategy = InheritanceType.JOINED)
+
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class City extends BaseEntity {
+public class City {
 
-    private String code;
-    private String city;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn
-    private Country country;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int code;
+
+    private String name;
+
 
 }

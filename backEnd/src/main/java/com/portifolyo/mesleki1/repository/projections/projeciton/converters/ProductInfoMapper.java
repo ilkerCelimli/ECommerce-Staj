@@ -17,7 +17,7 @@ public class ProductInfoMapper {
     }
 
     public ProductInfo productInfo(Product entity){
-        return new ProductInfo(entity.getId(),entity.getName(),entity.getDescription(),entity.getPrice(),categoriesInfoMapper.toDto(entity.getCategories()));
+        return new ProductInfo(entity.getId(),entity.getName(),entity.getDescription(),entity.getPrice(),entity.getImage(),categoriesInfoMapper.toDto(entity.getCategories()));
     }
 
     public List<ProductInfo> toDtoOnList(List<Product> productList) {

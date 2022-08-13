@@ -11,7 +11,7 @@ import java.util.List;
 public class CategoriesApiInfoMapper {
 
     public CategoriesApiInfo toDto(Categories categories, List<ProductInfo> list){
-        return new CategoriesApiInfo(categories.getId(), categories.getName(), categories.getDescription(),list );
+        return new CategoriesApiInfo(categories.getId(), categories.getName(), categories.getDescription(),categories.getImage(),list );
     }
 
 }

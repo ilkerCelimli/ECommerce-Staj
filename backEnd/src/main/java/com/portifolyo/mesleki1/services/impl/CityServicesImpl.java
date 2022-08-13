@@ -3,17 +3,21 @@ package com.portifolyo.mesleki1.services.impl;
 import com.portifolyo.mesleki1.entity.City;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.repository.CityRepository;
+import com.portifolyo.mesleki1.repository.projections.projeciton.CityInfo;
 import com.portifolyo.mesleki1.services.CityServices;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 
-public class CityServicesImpl extends BaseServicesImpl<City> implements CityServices {
+public class CityServicesImpl implements CityServices {
 
     private final CityRepository cityRepository;
 
     public CityServicesImpl(CityRepository cityRepository) {
-        super(cityRepository);
+
         this.cityRepository = cityRepository;
     }
 
@@ -21,7 +25,7 @@ public class CityServicesImpl extends BaseServicesImpl<City> implements CityServ
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Override
     public City findByName(String name) {
-        if (checkCityNameIsExists(name)) return this.cityRepository.findCityByCityEquals(name).get();
+        if (checkCityNameIsExists(name)) return this.cityRepository.findCityByNameEquals(name).get();
         if (checkCityCodeIsExists(name)) {
             return this.cityRepository.findCityByCodeEquals(name).get();
         }
@@ -37,6 +41,18 @@ public class CityServicesImpl extends BaseServicesImpl<City> implements CityServ
 
     @Override
     public boolean checkCityNameIsExists(String name) {
-        return this.cityRepository.existsCityByCityEquals(name);
+        return this.cityRepository.existsCityByNameEquals(name);
+    }
+
+    @Override
+    public City findById(int id) {
+        Optional<City> o = this.cityRepository.findById(id);
+        if(o.isPresent()) return o.get();
+        else throw new NotFoundException();
+    }
+
+    @Override
+    public List<CityInfo> findCities() {
+        return this.cityRepository.findCities();
     }
 }

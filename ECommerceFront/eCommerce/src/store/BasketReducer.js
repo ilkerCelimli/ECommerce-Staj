@@ -12,7 +12,12 @@ const BasketReducer = createSlice({
             state.count++;
         },
         deleteToBasket: (state,action) => {
-           state.basket = state.basket.filter(item => item.id !== action.payload);
+           if(state.basket.find(item => item.id === action.payload.id).quantity == 1){
+               state.basket = state.basket.filter(item => item.id !== action.payload);
+           }
+           else {
+                state.basket.find(item => item.id === action.payload.id).quantity--;
+           }
            state.count--;
         }
     }});

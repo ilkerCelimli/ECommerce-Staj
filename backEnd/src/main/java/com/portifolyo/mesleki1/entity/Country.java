@@ -15,8 +15,8 @@ import java.util.List;
 public class Country extends BaseEntity {
     private String code;
     private String country;
-     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+   /*  @OneToMany(mappedBy = "country", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<City> cities;
-
+*/
 
 }

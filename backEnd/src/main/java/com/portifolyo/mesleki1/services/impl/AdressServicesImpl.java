@@ -31,13 +31,13 @@ public class AdressServicesImpl extends BaseServicesImpl<Adress> implements Adre
     }
 
     @Override
-    public Adress findAdressByTitleAndUserId(String title, String userId) {
-        Optional<Adress> o = this.adressRepository.findAdressbyTitleAndUserId(title,userId);
+    public Adress findAdressByTitleAndUserId(String userId) {
+        Optional<Adress> o = this.adressRepository.findAdressbyTitleAndUserId(userId);
         return o.orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public City findByCityId(String id) {
+    public City findByCityId(int id) {
         return cityServices.findById(id);
     }
 }

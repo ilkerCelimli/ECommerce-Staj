@@ -7,5 +7,6 @@ public class AddCategoriesDto {
 
     private String name;
     private String description;
+    private byte[] image;
 
 }

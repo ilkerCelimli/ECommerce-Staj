@@ -13,7 +13,6 @@ import org.springframework.web.context.request.WebRequest;
 public class EmailActiviteException extends RuntimeException {
 
     @ExceptionHandler(EmailActiviteException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> userRegisterException(Exception ex, WebRequest web) {
         return ResponseEntity.badRequest().body("Check Code Wrong");
     }

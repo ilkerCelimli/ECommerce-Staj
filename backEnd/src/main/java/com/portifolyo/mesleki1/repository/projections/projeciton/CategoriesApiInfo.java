@@ -6,6 +6,7 @@ public record CategoriesApiInfo(
         String id,
         String name,
         String description,
+        byte[] image,
         List<ProductInfo>categories
 ) {
 }

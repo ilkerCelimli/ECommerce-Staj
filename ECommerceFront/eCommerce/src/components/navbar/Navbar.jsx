@@ -4,7 +4,7 @@ import {
     Button,
     Container,
     Grid,
-    IconButton,
+    IconButton, Input,
     Menu,
     MenuItem, TextField,
     Toolbar,
@@ -16,13 +16,13 @@ import LoginIcon from '@mui/icons-material/Login';
 import {useReducer, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
-import {Label} from "@mui/icons-material";
+import {Label, Search} from "@mui/icons-material";
 import {login, logout} from "../../store/AuthReducers.js";
 import CloseIcon from '@mui/icons-material/Close';
 
 export const Navbar = (props) => {
 
-    const {handleChange,handleSubmit,register} = useForm();
+    const {handleChange, handleSubmit, register} = useForm();
     const auth = useSelector((state) => state.auth)
     const action = useDispatch();
     const basket = useSelector((state) => state.basket)
@@ -30,14 +30,14 @@ export const Navbar = (props) => {
     const pages = ['Anasayfa', 'Ürünler', 'Hakkımızda', 'İletişim'];
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [anchorElLogin,setAnchorElLogin] = useState(null);
+    const [anchorElLogin, setAnchorElLogin] = useState(null);
 
     const onSubmit = (data) => {
         console.log(data)
         action(login(data))
     }
 
-    const handleLogOut= () => {
+    const handleLogOut = () => {
         action(logout())
     }
 
@@ -71,7 +71,7 @@ export const Navbar = (props) => {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="sticky" >
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
@@ -158,6 +158,7 @@ export const Navbar = (props) => {
                         ))}
                     </Box>
 
+
                     {auth.isAuthenticated ? (
                             <Box sx={{flexGrow: 0}}>
                                 <Tooltip title="Open settings">
@@ -183,18 +184,17 @@ export const Navbar = (props) => {
                                 >
 
 
-                                        <MenuItem onClick={handleCloseUserMenu}>
-                                            <Typography textAlign="center">Profil</Typography>
-                                        </MenuItem>
+                                    <MenuItem onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">Profil</Typography>
+                                    </MenuItem>
 
                                     <MenuItem onClick={handleCloseUserMenu}>
                                         <Typography textAlign="center">Sepetim{` ${basket.count}`}</Typography>
                                     </MenuItem>
 
-                                    <MenuItem  onClick={handleUserLogout}>
+                                    <MenuItem onClick={handleUserLogout}>
                                         <Typography textAlign="center">Çıkış yap</Typography>
                                     </MenuItem>
-
 
 
                                 </Menu>
@@ -226,33 +226,34 @@ export const Navbar = (props) => {
                                     }}
                                     open={Boolean(anchorElLogin)}
                                     onClose={closeLogin}>
-                                    <Box component = {'form'} onSubmit={handleSubmit(onSubmit)} sx = {{  '& .MuiTextField-root': { m: 1, width: '25ch' },}} noValidate autoComplate={"off"}>
+                                    <Box component={'form'} onSubmit={handleSubmit(onSubmit)}
+                                         sx={{'& .MuiTextField-root': {m: 1, width: '25ch'},}} noValidate
+                                         autoComplate={"off"}>
 
-                                        <MenuItem onClick={closeLogin} style={{justifyContent:'flex-end'}}>
+                                        <MenuItem onClick={closeLogin} style={{justifyContent: 'flex-end'}}>
                                             <IconButton> <CloseIcon/> </IconButton>
                                         </MenuItem>
 
-                                    <MenuItem>
+                                        <MenuItem>
 
-                                        <TextField required id = {"outlined-required"} label = {"Kullanıcı Adı"} onChange={handleChange} {...register("email")}/>
-                                    </MenuItem>
-                                    <MenuItem>
+                                            <TextField required id={"outlined-required"} label={"Kullanıcı Adı"}
+                                                       onChange={handleChange} {...register("email")}/>
+                                        </MenuItem>
+                                        <MenuItem>
 
-                                        <TextField required id = {"outlined-required"} label = {"Şifre"} onChange={handleChange} {...register("password")}/>
-                                    </MenuItem>
+                                            <TextField required id={"outlined-required"} label={"Şifre"}
+                                                       onChange={handleChange} {...register("password")}/>
+                                        </MenuItem>
 
-                                        <MenuItem type={"submit"} onClick={handleSubmit(onSubmit)} style = {{justifyContent:'center'}}>
+                                        <MenuItem type={"submit"} onClick={handleSubmit(onSubmit)}
+                                                  style={{justifyContent: 'center'}}>
                                             <Typography textAlign="center">Giriş yap</Typography>
                                         </MenuItem>
 
-                                        <MenuItem  onClick={handleCloseUserMenu} style={{justifyContent:'center'}}>
+                                        <MenuItem onClick={handleCloseUserMenu} style={{justifyContent: 'center'}}>
                                             <Typography textAlign="center">Kayıt ol</Typography>
                                         </MenuItem>
-
-
-
                                     </Box>
-
                                 </Menu>
                             </Box>
                         )

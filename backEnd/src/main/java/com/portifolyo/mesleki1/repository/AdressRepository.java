@@ -11,8 +11,9 @@ public interface AdressRepository extends BaseRepository<Adress>{
     @Query("select a from Adress a where a.user.id = ?1")
     List<Adress> findAdressByUserId(String id);
 
-    @Query("select a from Adress a where a.title = ?1 and a.user.id = ?2 ")
-    Optional<Adress> findAdressbyTitleAndUserId(String title, String userId);
+    @Query("select a from Adress a where a.user.id = ?1 ")
+    Optional<Adress> findAdressbyTitleAndUserId(String userId);
+
 
 
 }

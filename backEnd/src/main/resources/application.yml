@@ -23,4 +23,6 @@ spring:
             required: true
             enabled: true
 
-
+jwt:
+  secretKey: "MySuperSecretKey"
+  expirationTime: 1800000

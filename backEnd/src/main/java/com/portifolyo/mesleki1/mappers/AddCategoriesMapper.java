@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class AddCategoriesMapper {
 
     public Categories toEntity(AddCategoriesDto dto) {
-        return new Categories(dto.getName(),dto.getDescription());
+        return new Categories(dto.getName(),dto.getDescription(),dto.getImage());
     }
 
 }

@@ -7,6 +7,7 @@ public record ProductInfo(
         String name,
         String description,
         BigDecimal price,
+        byte[] image,
         CategoriesInfo categories
 ) {
 }
