@@ -21,12 +21,12 @@ public class CategoriesApi {
 
     private final CategoriesService categoriesService;
 
-    @GetMapping("/findCategoriesAndProducts")
+    @GetMapping("/public/findCategoriesAndProducts")
     public ResponseEntity<List<CategoriesApiInfo>> findCategoriesAndProducts() {
         return ResponseEntity.ok().body(this.categoriesService.findCategoriesInfoList());
     }
 
-    @GetMapping("/findCategorieAndProducts/{id}")
+    @GetMapping("/public/findCategorieAndProducts/{id}")
     public ResponseEntity<CategoriesInfo> findCategorieAndProducts(@PathVariable String id) {
         return ResponseEntity.ok().body(this.categoriesService.findCategoriesInfo(id));
     }

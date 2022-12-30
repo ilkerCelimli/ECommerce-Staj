@@ -24,7 +24,7 @@ public class UserApi {
     }
 
 
-    @PostMapping("/login")
+    @PostMapping("/public/login")
     public ResponseEntity<Object> login(LoginDto dto) {
         return ResponseEntity.ok().build();
     }
@@ -54,13 +54,13 @@ public class UserApi {
         return result ? ResponseEntity.ok().build() : null;
     }
 
-    @GetMapping("/forgotPassword/{email}")
+    @GetMapping("/public/forgotPassword/{email}")
     public ResponseEntity<Object> forgotPassword(@PathVariable String email) {
         this.userServices.resetPasswordRequest(email);
         return ResponseEntity.ok().build();
     }
 
-   @GetMapping("/resetPassword/{id}/{password}")
+   @GetMapping("/public/resetPassword/{id}/{password}")
     public ResponseEntity<Object> resetPassword(@PathVariable("id") String id,@PathVariable("password") String password) throws SqlExceptionCustom {
        this.userServices.ChangePassword(id,password);
        return ResponseEntity.ok().build();

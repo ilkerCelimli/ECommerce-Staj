@@ -19,6 +19,9 @@ import com.portifolyo.mesleki1.utils.RandomString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -171,4 +174,11 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         save(u);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> u = this.userRepository.findUserByEmailEquals(username);
+        List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
+        simpleGrantedAuthorities.add(new SimpleGrantedAuthority("User"));
+        return u.isPresent() ? new org.springframework.security.core.userdetails.User(u.get().getName(),"",simpleGrantedAuthorities) : null;
+    }
 }

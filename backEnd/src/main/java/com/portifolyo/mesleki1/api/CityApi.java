@@ -17,7 +17,7 @@ public class CityApi {
 
     private final CityServices cityServices;
 
-    @GetMapping("/findCities")
+    @GetMapping("/public/findCities")
     public List<CityInfo> findCities() {
         return this.cityServices.findCities();
     }

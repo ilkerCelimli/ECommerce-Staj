@@ -3,11 +3,13 @@ package com.portifolyo.mesleki1.services;
 import com.portifolyo.mesleki1.dtos.UserRegisterDto;
 import com.portifolyo.mesleki1.entity.User;
 import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.mail.MessagingException;
 import java.sql.SQLException;
 
-public interface UserServices extends BaseServices<User>{
+public interface UserServices extends BaseServices<User>, UserDetailsService {
 
     boolean checkUserIsExists(String email);
     User findByEmail(String email);

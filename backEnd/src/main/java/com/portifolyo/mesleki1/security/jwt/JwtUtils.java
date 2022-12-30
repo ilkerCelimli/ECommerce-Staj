@@ -41,5 +41,10 @@ public class JwtUtils {
                 .sign(algorithm);
     }
 
+    public String crateToken(String email) {
+      return  JWT.create().withClaim("email",email).withExpiresAt(new Date(System.currentTimeMillis()+expirationTime))
+                .sign(algorithm);
+    }
+
 
 }

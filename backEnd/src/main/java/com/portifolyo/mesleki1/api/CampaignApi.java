@@ -21,7 +21,7 @@ public class CampaignApi {
 
     private final CampaignService campaignService;
 
-    @GetMapping("/findCampaigns")
+    @GetMapping("/public/findCampaigns")
     public ResponseEntity<List<CampaignInfo>> findCampaigns() {
         return ResponseEntity.ok().body(campaignService.findCampaigns());
     }
