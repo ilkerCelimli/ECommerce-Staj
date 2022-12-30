@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portifolyo.mesleki1.dtos.LoginDto;
 import com.portifolyo.mesleki1.entity.User;
 import com.portifolyo.mesleki1.services.UserServices;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.PasswordAuthentication;
+import java.util.Objects;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -32,6 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
         this.userServices = userServices;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
 
 
     @Override
@@ -53,6 +55,21 @@ public class JwtFilter extends OncePerRequestFilter {
 
             else response.sendError(403,"Kullanıcı bulunamadı");
         }
+        String auth = request.getHeader(AUTHORIZATION);
+        boolean validateToken = false;
+        if(!Objects.isNull(auth) && !Strings.isBlank(auth) && !Strings.isEmpty(auth)) {
+            if(auth.contains("bearer ")) {
+                String token = auth.substring(7);
+                JwtUtils jwt = new JwtUtils();
+               validateToken = jwt.ValidateToken(token);
+            }
+
+        }
+
+        if (validateToken || request.getServletPath().contains("/public")) {
+            filterChain.doFilter(request,response);
+        }
+        else response.sendError(404);
 
 
     }

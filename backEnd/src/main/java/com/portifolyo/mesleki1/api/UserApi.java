@@ -2,7 +2,7 @@ package com.portifolyo.mesleki1.api;
 
 import com.portifolyo.mesleki1.dtos.LoginDto;
 import com.portifolyo.mesleki1.dtos.UserRegisterDto;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.services.UserServices;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +18,12 @@ import java.sql.SQLException;
 public class UserApi {
 
     private final UserServices userServices;
-
     public UserApi(UserServices userServicesImpl) {
         this.userServices = userServicesImpl;
     }
 
 
-    @PostMapping("/public/login")
+    @PostMapping("/login")
     public ResponseEntity<Object> login(LoginDto dto) {
         return ResponseEntity.ok().build();
     }
@@ -35,7 +34,7 @@ public class UserApi {
         return ResponseEntity.accepted().build();
     }
 
-    @PostMapping("/registerUser")
+    @PostMapping("/public/registerUser")
     public ResponseEntity<Object> registerUser(@RequestBody UserRegisterDto userRegisterDto) throws SQLException {
         userServices.userRegister(userRegisterDto);
         return ResponseEntity.created(null).build();

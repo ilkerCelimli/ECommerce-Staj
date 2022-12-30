@@ -2,8 +2,7 @@ package com.portifolyo.mesleki1.services;
 
 import com.portifolyo.mesleki1.dtos.UserRegisterDto;
 import com.portifolyo.mesleki1.entity.User;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.mail.MessagingException;

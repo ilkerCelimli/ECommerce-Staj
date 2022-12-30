@@ -6,7 +6,7 @@ import com.portifolyo.mesleki1.entity.Categories;
 import com.portifolyo.mesleki1.entity.Product;
 import com.portifolyo.mesleki1.entity.Shopper;
 import com.portifolyo.mesleki1.entity.User;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.DataIsExistsException;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.mappers.AddProductMapper;

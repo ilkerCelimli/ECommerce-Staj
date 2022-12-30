@@ -1,7 +1,7 @@
 package com.portifolyo.mesleki1.api;
 
 import com.portifolyo.mesleki1.dtos.AddCategoriesDto;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.repository.projections.projeciton.CategoriesApiInfo;
 import com.portifolyo.mesleki1.repository.projections.projeciton.CategoriesInfo;
 import com.portifolyo.mesleki1.services.CategoriesService;

@@ -4,7 +4,7 @@ import com.portifolyo.mesleki1.dtos.AddProductDto;
 import com.portifolyo.mesleki1.dtos.ShopperUpdateDto;
 import com.portifolyo.mesleki1.entity.Shopper;
 import com.portifolyo.mesleki1.entity.User;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.repository.projections.projeciton.ShopperInfo;
 
 import java.sql.SQLException;

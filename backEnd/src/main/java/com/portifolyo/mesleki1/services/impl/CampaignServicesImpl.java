@@ -3,7 +3,7 @@ package com.portifolyo.mesleki1.services.impl;
 import com.portifolyo.mesleki1.dtos.AddCampaignDto;
 import com.portifolyo.mesleki1.entity.Campaign;
 import com.portifolyo.mesleki1.entity.Product;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.mappers.AddCampaignMapper;
 import com.portifolyo.mesleki1.repository.CampaignRepository;

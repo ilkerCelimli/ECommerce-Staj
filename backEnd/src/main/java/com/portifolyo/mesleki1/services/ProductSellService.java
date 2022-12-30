@@ -4,7 +4,7 @@ import com.portifolyo.mesleki1.dtos.OrdersDto;
 import com.portifolyo.mesleki1.dtos.SellProductsDto;
 import com.portifolyo.mesleki1.entity.Orders;
 import com.portifolyo.mesleki1.enums.OrderStatus;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.repository.projections.projeciton.CampaignInfo;
 import org.springframework.web.bind.annotation.RequestBody;
 

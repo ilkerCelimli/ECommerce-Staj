@@ -1,11 +1,10 @@
 package com.portifolyo.mesleki1.services.impl;
 
-import com.portifolyo.mesleki1.dtos.AdressDto;
 import com.portifolyo.mesleki1.dtos.UserRegisterDto;
 import com.portifolyo.mesleki1.entity.Adress;
 import com.portifolyo.mesleki1.entity.User;
 import com.portifolyo.mesleki1.enums.ROLE;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.EmailActiviteException;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.exceptions.apiexception.UserRegisterException;
@@ -22,6 +21,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -41,8 +41,9 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     private final AdressDtoMapper adressDtoMapper;
     private final ShopperService shopperService;
     private final JavaMailSender javaMailSender;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper, AdressServices adressServices, AdressDtoMapper adressDtoMapper, ShopperService shopperService, JavaMailSender javaMailSender) {
+    public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper, AdressServices adressServices, AdressDtoMapper adressDtoMapper, ShopperService shopperService, JavaMailSender javaMailSender, BCryptPasswordEncoder bCryptPasswordEncoder) {
         super(userRepository);
         this.userRepository = userRepository;
         this.userRegisterMapper = userRegisterMapper;
@@ -50,6 +51,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
         this.adressDtoMapper = adressDtoMapper;
         this.shopperService = shopperService;
         this.javaMailSender = javaMailSender;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -98,6 +100,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
             u.setActive(true);
             u.setEmailActivated(false);
             u.setActivitionCode(new RandomString().nextString());
+            u.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
             User f = save(u);
             if (f.getRole().equals(ROLE.SHOP)) {
                 boolean result = shopperService.shopperCheckandSave(f);

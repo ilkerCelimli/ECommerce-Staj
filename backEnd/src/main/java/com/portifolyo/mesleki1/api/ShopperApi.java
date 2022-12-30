@@ -5,7 +5,7 @@ import com.portifolyo.mesleki1.dtos.AddProductDto;
 import com.portifolyo.mesleki1.dtos.SellProductsDto;
 import com.portifolyo.mesleki1.dtos.ShopperUpdateDto;
 import com.portifolyo.mesleki1.enums.OrderStatus;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.repository.projections.projeciton.ShopperInfo;
 import com.portifolyo.mesleki1.services.CampaignService;
 import com.portifolyo.mesleki1.services.ProductSellService;

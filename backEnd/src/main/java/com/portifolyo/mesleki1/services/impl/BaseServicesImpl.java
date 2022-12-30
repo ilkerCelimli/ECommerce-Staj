@@ -1,7 +1,7 @@
 package com.portifolyo.mesleki1.services.impl;
 
 import com.portifolyo.mesleki1.entity.BaseEntity;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.repository.BaseRepository;
 import com.portifolyo.mesleki1.services.BaseServices;

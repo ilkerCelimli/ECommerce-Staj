@@ -5,7 +5,7 @@ import com.portifolyo.mesleki1.dtos.SellProductsDto;
 import com.portifolyo.mesleki1.entity.Orders;
 import com.portifolyo.mesleki1.entity.Product;
 import com.portifolyo.mesleki1.enums.OrderStatus;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.mappers.AdressDtoMapper;
 import com.portifolyo.mesleki1.mappers.OrdersDtoMapper;
 import com.portifolyo.mesleki1.repository.OrderRepository;

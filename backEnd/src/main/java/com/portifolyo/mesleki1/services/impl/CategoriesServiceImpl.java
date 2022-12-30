@@ -2,7 +2,7 @@ package com.portifolyo.mesleki1.services.impl;
 
 import com.portifolyo.mesleki1.dtos.AddCategoriesDto;
 import com.portifolyo.mesleki1.entity.Categories;
-import com.portifolyo.mesleki1.exceptions.SqlExceptionCustom;
+import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.DataIsExistsException;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
 import com.portifolyo.mesleki1.mappers.AddCategoriesMapper;
