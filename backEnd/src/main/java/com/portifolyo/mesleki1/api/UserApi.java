@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 import java.sql.SQLException;
 
 
@@ -35,7 +36,7 @@ public class UserApi {
     }
 
     @PostMapping("/public/registerUser")
-    public ResponseEntity<Object> registerUser(@RequestBody UserRegisterDto userRegisterDto) throws SQLException {
+    public ResponseEntity<Object> registerUser(@RequestBody @Valid UserRegisterDto userRegisterDto) throws SQLException {
         userServices.userRegister(userRegisterDto);
         return ResponseEntity.created(null).build();
     }

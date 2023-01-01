@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -94,6 +95,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
 
 
     @Override
+    @Transactional
     public void userRegister(UserRegisterDto dto) throws SQLException {
         if (!checkUserIsExists(dto.getEmail())) {
             User u = this.userRegisterMapper.toEntity(dto);

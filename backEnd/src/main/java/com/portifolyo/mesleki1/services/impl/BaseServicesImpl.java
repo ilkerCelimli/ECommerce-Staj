@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.domain.Sort;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,7 @@ public abstract class BaseServicesImpl<T extends BaseEntity> implements BaseServ
     }
 
     @Override
+    @Transactional
     public T save(T entity) throws SqlExceptionCustom {
         T e = baseRepository.save(entity);
         if(Strings.isBlank(e.getId()) || Strings.isEmpty(e.getId())){
@@ -39,6 +41,7 @@ public abstract class BaseServicesImpl<T extends BaseEntity> implements BaseServ
     }
 
     @Override
+    @Transactional
     public void update(T entity) throws SqlExceptionCustom {
         Date after = entity.getUpdatedAt();
         entity.setUpdatedAt(new Date());
@@ -54,6 +57,7 @@ public abstract class BaseServicesImpl<T extends BaseEntity> implements BaseServ
     }
 
     @Override
+    @Transactional
     public void delete(String id) throws SqlExceptionCustom {
         T e = findById(id);
         if(e == null) {
