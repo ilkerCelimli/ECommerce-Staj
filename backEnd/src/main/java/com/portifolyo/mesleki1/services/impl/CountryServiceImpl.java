@@ -5,6 +5,8 @@ import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.repository.CountryRepository;
 import com.portifolyo.mesleki1.services.CountryServices;
 
+import javax.transaction.Transactional;
+
 public class CountryServiceImpl extends BaseServicesImpl<Country> implements CountryServices {
 
     private final CountryRepository countryRepository;
@@ -18,7 +20,7 @@ public class CountryServiceImpl extends BaseServicesImpl<Country> implements Cou
         boolean result = this.countryRepository.findCountryByCountryEquals(country).isPresent();
         return result;
     }
-
+    @Transactional
     public boolean countrySave(Country country) throws SqlExceptionCustom {
         save(country);
         return true;

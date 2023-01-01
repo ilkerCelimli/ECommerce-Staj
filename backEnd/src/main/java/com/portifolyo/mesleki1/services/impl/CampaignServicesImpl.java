@@ -13,6 +13,7 @@ import com.portifolyo.mesleki1.services.ProductService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,6 +39,7 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
     }
 
     @Override
+    @Transactional
     public void addCampaign(AddCampaignDto dto) throws SqlExceptionCustom {
         Product p = productService.findProductForShopper(dto.getProductId(), dto.getShopperId());
         if (Objects.nonNull(p)) {
@@ -50,6 +52,7 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
     }
 
     @Override
+    @Transactional
     public void updateCampaign(AddCampaignDto dto) {
         Optional<Campaign> c = this.campaignRepository.findByProduct_IdEqualsAndProduct_Shopper_IdEquals(dto.getProductId(), dto.getShopperId());
         c.ifPresentOrElse(i -> {
@@ -75,6 +78,7 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
     }
 
     @Override
+    @Transactional
     public void deleteCampaign(String productId) throws SqlExceptionCustom {
         Optional<CampaignInfo> o =this.campaignRepository.findCampainForProduct(productId);
         if (o.isPresent()) {

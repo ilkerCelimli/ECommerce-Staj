@@ -41,7 +41,7 @@ public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements 
         this.ordersDtoMapper = ordersDtoMapper;
         this.userServices = userServices;
     }
-
+    @Transactional
     public Orders orderChange(SellProductsDto dto) {
         CampaignInfo c = checkCampaign(dto.getProductId());
 
@@ -80,6 +80,7 @@ public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements 
     }
 
     @Override
+    @Transactional
     public boolean sellProducts(SellProductsDto dto) throws SqlExceptionCustom {
         Orders o = orderChange(dto);
         if (Objects.nonNull(o)) {
@@ -94,6 +95,7 @@ public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements 
     }
 
     @Override
+    @Transactional
     public void ChangeOrderStatus(String id, OrderStatus orderStatus) throws SqlExceptionCustom {
         Orders o = findById(id);
         o.setOrderStatus(orderStatus);
@@ -102,7 +104,7 @@ public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements 
     }
 
     @Override
-    @Transactional(rollbackFor = {SqlExceptionCustom.class})
+    @Transactional
     public void sellProductList(List<SellProductsDto> dto) throws SqlExceptionCustom {
         List<Orders> list = new ArrayList<>();
 

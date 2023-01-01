@@ -19,6 +19,7 @@ import com.portifolyo.mesleki1.services.ProductService;
 import com.portifolyo.mesleki1.services.ShopperService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -43,6 +44,7 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
 
 
     @Override
+    @Transactional
     public boolean shopperCheckandSave(User user) throws SqlExceptionCustom {
         Shopper shopper = new Shopper();
         shopper.setActive(false);
@@ -52,6 +54,7 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     }
 
     @Override
+    @Transactional
     public void addProduct(AddProductDto dto) throws SQLException {
 
         if (!checkProductIsExist(dto.getProductName(),dto.getShopperId())) {
@@ -70,6 +73,7 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     }
 
     @Override
+    @Transactional
     public void updateProduct(AddProductDto dto) throws SQLException {
         Product p = this.productService.findProductForShopper(dto.getProductName(), dto.getShopperId());
         if (Objects.nonNull(dto.getProductName()) || !Strings.isBlank(dto.getProductName()) || Strings.isEmpty(dto.getProductName())) {
@@ -108,6 +112,7 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     }
 
     @Override
+    @Transactional
     public void deleteProduct(String id) throws SQLException {
         this.productService.delete(id);
 

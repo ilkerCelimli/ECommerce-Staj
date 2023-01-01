@@ -16,6 +16,7 @@ import com.portifolyo.mesleki1.services.ProductService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -44,6 +45,7 @@ public class CategoriesServiceImpl extends BaseServicesImpl<Categories> implemen
 
 
     @Override
+    @Transactional
     public void AddCategories(AddCategoriesDto dto) throws SqlExceptionCustom {
         if(!checkCategoriesIsExists(dto.getName())) {
             save(addCategoriesMapper.toEntity(dto));
@@ -53,6 +55,7 @@ public class CategoriesServiceImpl extends BaseServicesImpl<Categories> implemen
     }
 
     @Override
+    @Transactional
     public void updateCategories(String id ,AddCategoriesDto dto) throws SqlExceptionCustom {
        Categories categories = findById(id);
        if(Objects.nonNull(dto.getName()) || !Strings.isEmpty(dto.getName()) || !Strings.isBlank(dto.getName())) {
@@ -66,6 +69,7 @@ public class CategoriesServiceImpl extends BaseServicesImpl<Categories> implemen
     }
 
     @Override
+
     public CategoriesInfo findCategoriesInfo(String id) {
         Optional<CategoriesInfo> categoriesInfo = this.categoriesRepository.findCategories(id);
         if(categoriesInfo.isPresent()) {
