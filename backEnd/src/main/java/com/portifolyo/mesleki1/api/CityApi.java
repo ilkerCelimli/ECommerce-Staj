@@ -11,7 +11,6 @@ import java.util.List;
 @RequestMapping(value = "/api/cities")
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(allowedHeaders = "*",methods = {RequestMethod.OPTIONS,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 
 public class CityApi {
 

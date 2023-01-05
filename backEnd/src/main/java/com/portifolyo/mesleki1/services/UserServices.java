@@ -15,12 +15,12 @@ public interface UserServices extends BaseServices<User>, UserDetailsService {
     boolean checkUserIsActivated(String email);
    /* boolean checkUserEmailActivited(String email);
     boolean checkUserPassword(String email, String password); */
-    boolean SendUserEmail(String email) throws MessagingException;
+    boolean sendUserEmail(String email) throws MessagingException;
     void userRegister(UserRegisterDto dto) throws SQLException;
     boolean activiteEmail(String code) throws SQLException;
     void resetPasswordRequest(String email);
     boolean updateUser(String id,UserRegisterDto dto) throws SQLException;
-    void ChangePassword(String id,String password) throws SqlExceptionCustom;
+    void changePassword(String id,String password) throws SqlExceptionCustom;
 
 
 }

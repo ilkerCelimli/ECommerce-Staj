@@ -3,7 +3,7 @@ package com.portifolyo.mesleki1.services.impl;
 import com.portifolyo.mesleki1.dtos.UserRegisterDto;
 import com.portifolyo.mesleki1.entity.Adress;
 import com.portifolyo.mesleki1.entity.User;
-import com.portifolyo.mesleki1.enums.ROLE;
+import com.portifolyo.mesleki1.enums.Role;
 import com.portifolyo.mesleki1.exceptions.apiexception.SqlExceptionCustom;
 import com.portifolyo.mesleki1.exceptions.apiexception.EmailActiviteException;
 import com.portifolyo.mesleki1.exceptions.apiexception.NotFoundException;
@@ -81,11 +81,11 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     }
 
     @Override
-    public boolean SendUserEmail(String email) throws MessagingException {
+    public boolean sendUserEmail(String email) throws MessagingException {
 
         MimeMessage mime = javaMailSender.createMimeMessage();
         mime.setFrom(new InternetAddress("Meloonia52@gmail.com"));
-        mime.setRecipient(Message.RecipientType.TO, new InternetAddress("ilker-7@hotmail.com"));
+        mime.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
         mime.setSubject("Test email");
         mime.setText("localhost:8080/api/user/activitemail/ZovxxqALp8ndYGUswwwfL");
         javaMailSender.send(mime);
@@ -104,11 +104,10 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
             u.setActivitionCode(new RandomString().nextString());
             u.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
             User f = save(u);
-            if (f.getRole().equals(ROLE.SHOP)) {
+            if (f.getRole().equals(Role.SHOP)) {
                 boolean result = shopperService.shopperCheckandSave(f);
-                if (!result) {
-                    throw new UserRegisterException();
-                }
+                if (!result) throw new UserRegisterException();
+
             }
             Adress a = adressDtoMapper.toEntity(dto.getAdress());
             a.setUser(f);
@@ -173,7 +172,7 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     }
 
     @Override
-    public void ChangePassword(String id, String password) throws SqlExceptionCustom {
+    public void changePassword(String id, String password) throws SqlExceptionCustom {
         User u = findById(id);
         u.setPassword(password);
         save(u);

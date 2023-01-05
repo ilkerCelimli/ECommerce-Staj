@@ -46,7 +46,7 @@ public class CategoriesServiceImpl extends BaseServicesImpl<Categories> implemen
 
     @Override
     @Transactional
-    public void AddCategories(AddCategoriesDto dto) throws SqlExceptionCustom {
+    public void addCategories(AddCategoriesDto dto) throws SqlExceptionCustom {
         if(!checkCategoriesIsExists(dto.getName())) {
             save(addCategoriesMapper.toEntity(dto));
 

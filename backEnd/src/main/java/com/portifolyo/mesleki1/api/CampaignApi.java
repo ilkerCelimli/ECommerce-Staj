@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/campaign")
 @RequiredArgsConstructor
-@CrossOrigin(allowedHeaders = "*",methods = {RequestMethod.OPTIONS,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class CampaignApi {
 
 

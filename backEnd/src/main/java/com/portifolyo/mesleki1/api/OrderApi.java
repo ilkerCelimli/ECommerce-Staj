@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/sellProducts")
-@CrossOrigin(allowedHeaders = "*",methods = {RequestMethod.OPTIONS,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 
 public class OrderApi {
 
@@ -40,7 +39,7 @@ public class OrderApi {
 
     @PostMapping("/orderStatusChange")
     public ResponseEntity<Object> orderStatusChange(OrderStatusChangeRequest req) throws SqlExceptionCustom {
-        this.productSellService.ChangeOrderStatus(req.getOrderId(),req.getOrderStatus());
+        this.productSellService.changeOrderStatus(req.getOrderId(),req.getOrderStatus());
         return ResponseEntity.ok().build();
     }
 

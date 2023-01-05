@@ -96,7 +96,7 @@ public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements 
 
     @Override
     @Transactional
-    public void ChangeOrderStatus(String id, OrderStatus orderStatus) throws SqlExceptionCustom {
+    public void changeOrderStatus(String id, OrderStatus orderStatus) throws SqlExceptionCustom {
         Orders o = findById(id);
         o.setOrderStatus(orderStatus);
         update(o);

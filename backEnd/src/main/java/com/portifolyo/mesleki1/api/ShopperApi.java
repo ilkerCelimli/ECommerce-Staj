@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/shopper")
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(allowedHeaders = "*",methods = {RequestMethod.OPTIONS,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 
 public class ShopperApi {
 
@@ -78,7 +77,7 @@ public class ShopperApi {
 
     @PutMapping("/ChangeOrderStatus/{orderId}")
     public ResponseEntity<SellProductsDto> changeOrderStatus(@PathVariable String orderId, @RequestBody OrderStatus orderStatus) throws SqlExceptionCustom {
-        this.productSellService.ChangeOrderStatus(orderId,orderStatus);
+        this.productSellService.changeOrderStatus(orderId,orderStatus);
         return ResponseEntity.ok().build();
     }
 

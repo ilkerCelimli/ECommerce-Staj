@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin(allowedHeaders = "*",methods = {RequestMethod.OPTIONS,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 
 public class UserApi {
 
@@ -31,7 +30,7 @@ public class UserApi {
 
     @GetMapping("/sendMail")
     public ResponseEntity<Object> sendMail() throws MessagingException {
-        this.userServices.SendUserEmail("ilker-7@hotmail.com");
+        this.userServices.sendUserEmail("ilker-7@hotmail.com");
         return ResponseEntity.accepted().build();
     }
 
@@ -62,7 +61,7 @@ public class UserApi {
 
    @GetMapping("/public/resetPassword/{id}/{password}")
     public ResponseEntity<Object> resetPassword(@PathVariable("id") String id,@PathVariable("password") String password) throws SqlExceptionCustom {
-       this.userServices.ChangePassword(id,password);
+       this.userServices.changePassword(id,password);
        return ResponseEntity.ok().build();
    }
 

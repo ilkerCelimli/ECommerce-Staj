@@ -1,6 +1,6 @@
 package com.portifolyo.mesleki1.entity;
 
-import com.portifolyo.mesleki1.enums.ROLE;
+import com.portifolyo.mesleki1.enums.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,7 +21,7 @@ public class User extends BaseEntity {
   private String surname;
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
-  private ROLE role;
+  private Role role;
   @Column(nullable = false)
   private String PhoneNumber;
   @Column(nullable = false)
@@ -38,7 +38,7 @@ public class User extends BaseEntity {
   private String activitionCode;
 
 
-  public User(String name, String surname, ROLE role, String phoneNumber, String email, String password, Date birtday, long tcNo, String activitionCode) {
+  public User(String name, String surname, Role role, String phoneNumber, String email, String password, Date birtday, long tcNo, String activitionCode) {
     this.name = name;
     this.surname = surname;
     this.role = role;

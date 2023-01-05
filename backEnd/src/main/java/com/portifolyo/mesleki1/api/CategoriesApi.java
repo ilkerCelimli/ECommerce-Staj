@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/categories")
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(allowedHeaders = "*",methods = {RequestMethod.OPTIONS,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 
 public class CategoriesApi {
 
@@ -33,7 +32,7 @@ public class CategoriesApi {
 
     @PostMapping("/AddCategories")
     public ResponseEntity<CategoriesApiInfo> addCategories(@RequestBody AddCategoriesDto dto) throws SqlExceptionCustom {
-        this.categoriesService.AddCategories(dto);
+        this.categoriesService.addCategories(dto);
         return ResponseEntity.ok().build();
     }
 
