@@ -10,7 +10,7 @@ public class AddProductMapper {
 
 
     public Product toEntity(AddProductDto dto) {
-        return new Product(dto.getProductName(),dto.getDescription(),dto.getPrice(),dto.getImage());
+        return new Product(dto.productName(),dto.description(),dto.price(),dto.image());
     }
 
 }

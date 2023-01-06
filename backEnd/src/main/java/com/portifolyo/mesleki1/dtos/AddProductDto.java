@@ -1,21 +1,17 @@
 package com.portifolyo.mesleki1.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigDecimal;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class AddProductDto {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record AddProductDto(
 
-    private String shopperId;
-    private String categoriesId;
-    private String productName;
-    private String Description;
-    private BigDecimal price;
-    private byte[] image;
-
+     String shopperId,
+     String categoriesId,
+     String productName,
+     String description,
+     BigDecimal price,
+     byte[] image
+){
 }

@@ -17,6 +17,7 @@ import com.portifolyo.mesleki1.services.UserServices;
 import com.portifolyo.mesleki1.utils.RandomString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,7 +44,8 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     private final ShopperService shopperService;
     private final JavaMailSender javaMailSender;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    @Value("${spring.mail.username}")
+    private String sender;
     public UserServicesImpl(UserRepository userRepository, UserRegisterMapper userRegisterMapper, AdressServices adressServices, AdressDtoMapper adressDtoMapper, ShopperService shopperService, JavaMailSender javaMailSender, BCryptPasswordEncoder bCryptPasswordEncoder) {
         super(userRepository);
         this.userRepository = userRepository;
@@ -81,13 +83,14 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     }
 
     @Override
-    public boolean sendUserEmail(String email) throws MessagingException {
+    public boolean sendUserEmail(String email,String emailText,String code) throws MessagingException {
 
         MimeMessage mime = javaMailSender.createMimeMessage();
-        mime.setFrom(new InternetAddress("Meloonia52@gmail.com"));
+        mime.setFrom(new InternetAddress(sender));
         mime.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-        mime.setSubject("Test email");
-        mime.setText("localhost:8080/api/user/activitemail/ZovxxqALp8ndYGUswwwfL");
+        mime.setSubject(emailText);
+
+        mime.setText(String.format("localhost:8080/api/user/activitemail/%s",code));
         javaMailSender.send(mime);
 
         return true;
@@ -97,19 +100,19 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     @Override
     @Transactional
     public void userRegister(UserRegisterDto dto) throws SQLException {
-        if (!checkUserIsExists(dto.getEmail())) {
+        if (!checkUserIsExists(dto.email())) {
             User u = this.userRegisterMapper.toEntity(dto);
             u.setActive(true);
             u.setEmailActivated(false);
             u.setActivitionCode(new RandomString().nextString());
-            u.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+            u.setPassword(bCryptPasswordEncoder.encode(dto.password()));
             User f = save(u);
             if (f.getRole().equals(Role.SHOP)) {
                 boolean result = shopperService.shopperCheckandSave(f);
                 if (!result) throw new UserRegisterException();
 
             }
-            Adress a = adressDtoMapper.toEntity(dto.getAdress());
+            Adress a = adressDtoMapper.toEntity(dto.adress());
             a.setUser(f);
             this.adressServices.save(a);
         } else throw new UserRegisterException();
@@ -136,24 +139,24 @@ public class UserServicesImpl extends BaseServicesImpl<User> implements UserServ
     public boolean updateUser(String id, UserRegisterDto dto) throws SQLException {
         User u = findById(id);
 
-        if (!Strings.isBlank(dto.getEmail()) || !Strings.isBlank(dto.getEmail()) || !Objects.isNull(dto.getEmail())) {
-            u.setEmail(dto.getEmail());
+        if (!Strings.isBlank(dto.email()) || !Strings.isBlank(dto.email()) || !Objects.isNull(dto.email())) {
+            u.setEmail(dto.email());
         }
 
-        if (!Strings.isBlank(dto.getPassword()) || !Strings.isEmpty(dto.getPassword()) || !Objects.isNull(dto.getPassword())) {
-            u.setPassword(dto.getPassword());
+        if (!Strings.isBlank(dto.password()) || !Strings.isEmpty(dto.password()) || !Objects.isNull(dto.password())) {
+            u.setPassword(dto.password());
         }
 
-        if (!Strings.isBlank(dto.getName()) || !Strings.isEmpty(dto.getName()) || !Objects.isNull(dto.getName())) {
-            u.setName(dto.getName());
+        if (!Strings.isBlank(dto.name()) || !Strings.isEmpty(dto.name()) || !Objects.isNull(dto.name())) {
+            u.setName(dto.name());
         }
 
-        if (!Strings.isBlank(dto.getSurname()) || !Strings.isEmpty(dto.getSurname()) || !Objects.isNull(dto.getSurname())) {
-            u.setSurname(dto.getSurname());
+        if (!Strings.isBlank(dto.surname()) || !Strings.isEmpty(dto.surname()) || !Objects.isNull(dto.surname())) {
+            u.setSurname(dto.surname());
         }
 
-        if (Objects.nonNull(dto.getBirtday())) {
-            u.setBirtday(dto.getBirtday());
+        if (Objects.nonNull(dto.birtday())) {
+            u.setBirtday(dto.birtday());
         }
       /*  if ((Objects.nonNull(dto.getAdress()){
 

@@ -1,15 +1,11 @@
 package com.portifolyo.mesleki1.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class AdressDto {
+@JsonInclude(JsonInclude.Include.NON_NULL)
 
-    private int CityId;
-    private String adress;
-
+public record AdressDto(
+    int cityId,
+    String adress
+){
 }

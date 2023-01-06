@@ -11,12 +11,9 @@ import java.sql.SQLException;
 public class SqlExceptionCustom extends SQLException {
 
     public SqlExceptionCustom() {
+        super("Sql Exception");
     }
 
-    @ExceptionHandler(SqlExceptionCustom.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Object> sqlException(Exception ex, WebRequest web) {
-        return ResponseEntity.badRequest().body("Sql Exception");
-    }
+
 
 }

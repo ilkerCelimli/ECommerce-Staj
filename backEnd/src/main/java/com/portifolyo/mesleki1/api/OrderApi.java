@@ -39,7 +39,7 @@ public class OrderApi {
 
     @PostMapping("/orderStatusChange")
     public ResponseEntity<Object> orderStatusChange(OrderStatusChangeRequest req) throws SqlExceptionCustom {
-        this.productSellService.changeOrderStatus(req.getOrderId(),req.getOrderStatus());
+        this.productSellService.changeOrderStatus(req.orderId(),req.orderStatus());
         return ResponseEntity.ok().build();
     }
 

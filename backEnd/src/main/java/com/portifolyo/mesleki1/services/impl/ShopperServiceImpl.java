@@ -57,9 +57,9 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     @Transactional
     public void addProduct(AddProductDto dto) throws SQLException {
 
-        if (!checkProductIsExist(dto.getProductName(),dto.getShopperId())) {
-            Categories categories = categoriesService.findById(dto.getCategoriesId());
-            Shopper shopper = findById(dto.getShopperId());
+        if (!checkProductIsExist(dto.productName(),dto.shopperId())) {
+            Categories categories = categoriesService.findById(dto.categoriesId());
+            Shopper shopper = findById(dto.shopperId());
             Product product = addProductMapper.toEntity(dto);
             product.setShopper(shopper);
             product.setCategories(categories);
@@ -75,16 +75,16 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     @Override
     @Transactional
     public void updateProduct(AddProductDto dto) throws SQLException {
-        Product p = this.productService.findProductForShopper(dto.getProductName(), dto.getShopperId());
-        if (Objects.nonNull(dto.getProductName()) || !Strings.isBlank(dto.getProductName()) || Strings.isEmpty(dto.getProductName())) {
-            p.setName(dto.getProductName());
+        Product p = this.productService.findProductForShopper(dto.productName(), dto.productName());
+        if (Objects.nonNull(dto.productName()) || !Strings.isBlank(dto.productName()) || Strings.isEmpty(dto.productName())) {
+            p.setName(dto.productName());
         }
-        if (Objects.nonNull(dto.getDescription()) || !Strings.isEmpty(dto.getDescription()) || !Strings.isBlank(dto.getDescription())) {
-            p.setDescription(dto.getDescription());
+        if (Objects.nonNull(dto.description()) || !Strings.isEmpty(dto.description()) || !Strings.isBlank(dto.description())) {
+            p.setDescription(dto.description());
         }
 
-        if (Objects.nonNull(dto.getPrice())) {
-            p.setPrice(dto.getPrice());
+        if (Objects.nonNull(dto.price())) {
+            p.setPrice(dto.price());
         }
         this.productService.update(p);
 
@@ -121,15 +121,15 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     @Override
     //TODO Adres güncelleme düzenlenicek
     public void updateShopper(ShopperUpdateDto dto) {
-        Optional<Shopper> o = this.shopperRepository.findByUser_IdEquals(dto.getUserId());
+        Optional<Shopper> o = this.shopperRepository.findByUser_IdEquals(dto.userId());
         o.ifPresentOrElse(i -> {
 
-            if (Objects.nonNull(dto.getName()) || !Strings.isEmpty(dto.getName()) || !Strings.isBlank(dto.getName())) {
-                i.setName(dto.getName());
+            if (Objects.nonNull(dto.name()) || !Strings.isEmpty(dto.name()) || !Strings.isBlank(dto.name())) {
+                i.setName(dto.name());
             }
 
-            if (dto.getTaxNumber() != 0L) {
-                i.setTaxNumber(dto.getTaxNumber());
+            if (dto.taxNumber() != 0L) {
+                i.setTaxNumber(dto.taxNumber());
             }
             try {
                 update(i);

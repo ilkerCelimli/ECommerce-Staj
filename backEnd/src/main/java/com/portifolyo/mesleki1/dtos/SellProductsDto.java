@@ -1,16 +1,14 @@
 package com.portifolyo.mesleki1.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class SellProductsDto {
 
-    private String productId;
-    private String shopperId;
-    private String userId;
-    private AdressDto adressDto;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+
+public record SellProductsDto(
+        String productId,
+        String shopperId,
+        String userId,
+        AdressDto adressDto
+) {
 }

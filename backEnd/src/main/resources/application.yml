@@ -27,6 +27,3 @@ jwt:
   secretKey: "MySuperSecretKey"
   expirationTime: 1800000
 
-email-sender:
-  email: Meloonia52@gmail.com
-

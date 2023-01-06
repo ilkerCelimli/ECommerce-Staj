@@ -1,12 +1,15 @@
 package com.portifolyo.mesleki1.dtos;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-@Data
-public class AddCategoriesDto {
 
-    private String name;
-    private String description;
-    private byte[] image;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record AddCategoriesDto(
+        String name,
+        String description,
+        byte[] image
+) {
+
+
 
 }

@@ -19,15 +19,15 @@ public class ShopperUpdateMapper {
     }
 
     public Shopper toEntity(ShopperUpdateDto dto) {
-        User u = userServices.findById(dto.getUserId());
-        Adress adress = adressDtoMapper.toEntity(dto.getAdressDto());
+        User u = userServices.findById(dto.userId());
+        Adress adress = adressDtoMapper.toEntity(dto.adressDto());
         Shopper s = new Shopper();
 
         s.setUser(u);
        // s.getUser().setAdressList(adress);
         s.setActive(false);
-        s.setName(dto.getName());
-        s.setTaxNumber(dto.getTaxNumber());
+        s.setName(dto.name());
+        s.setTaxNumber(dto.taxNumber());
         return s;
     }
 

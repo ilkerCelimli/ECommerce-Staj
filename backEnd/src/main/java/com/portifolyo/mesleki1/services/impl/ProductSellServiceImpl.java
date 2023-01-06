@@ -43,19 +43,19 @@ public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements 
     }
     @Transactional
     public Orders orderChange(SellProductsDto dto) {
-        CampaignInfo c = checkCampaign(dto.getProductId());
+        CampaignInfo c = checkCampaign(dto.productId());
 
-        Product p = productService.findProductForShopper(dto.getProductId(), dto.getShopperId());
+        Product p = productService.findProductForShopper(dto.productId(), dto.shopperId());
         if (Objects.nonNull(c)) {
             if (c.getStartDate().before(new Date()) && c.getEndDate().after(new Date())) {
                 BigDecimal discount = p.getPrice().divide(BigDecimal.valueOf(100), 3, RoundingMode.CEILING).multiply(BigDecimal.valueOf(c.getDiscountRate()));
                 Orders orders = new Orders();
                 orders.setPrice(discount);
-                orders.setAdress(adressDtoMapper.toEntity(dto.getAdressDto()));
+                orders.setAdress(adressDtoMapper.toEntity(dto.adressDto()));
                 orders.setActive(true);
                 orders.setOrderStatus(OrderStatus.ORDER_TAKEN);
                 orders.setProduct(p);
-                orders.setPerson(this.userServices.findById(dto.getUserId()));
+                orders.setPerson(this.userServices.findById(dto.userId()));
                 return orders;
             } else return null;
         } else {
@@ -65,9 +65,9 @@ public class ProductSellServiceImpl extends BaseServicesImpl<Orders> implements 
             orders.setActive(true);
             orders.setPrice(p.getPrice());
 
-            orders.setPerson(this.userServices.findById(dto.getUserId()));
+            orders.setPerson(this.userServices.findById(dto.userId()));
 
-            orders.setAdress(adressDtoMapper.toEntity(dto.getAdressDto()));
+            orders.setAdress(adressDtoMapper.toEntity(dto.adressDto()));
             return orders;
         }
     }

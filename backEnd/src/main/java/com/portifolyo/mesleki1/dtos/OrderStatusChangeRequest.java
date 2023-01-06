@@ -1,18 +1,17 @@
 package com.portifolyo.mesleki1.dtos;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.portifolyo.mesleki1.enums.OrderStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class OrderStatusChangeRequest {
+@JsonInclude(JsonInclude.Include.NON_NULL)
 
-    private String orderId;
-    private OrderStatus orderStatus;
-
+public record OrderStatusChangeRequest(
+        String orderId,
+        OrderStatus orderStatus
+) {
 }
+
+
+
+
+

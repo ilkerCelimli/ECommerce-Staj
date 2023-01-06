@@ -30,7 +30,7 @@ public class UserApi {
 
     @GetMapping("/sendMail")
     public ResponseEntity<Object> sendMail() throws MessagingException {
-        this.userServices.sendUserEmail("ilker-7@hotmail.com");
+        this.userServices.sendUserEmail("ilker-7@hotmail.com","null0","null");
         return ResponseEntity.accepted().build();
     }
 

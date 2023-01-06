@@ -1,18 +1,13 @@
 package com.portifolyo.mesleki1.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ShopperUpdateDto {
-
-    private String userId;
-    private String name;
-    private long taxNumber;
-    private AdressDto adressDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record ShopperUpdateDto(
+        String userId,
+        String name,
+        long taxNumber,
+        AdressDto adressDto
+        ){
 }

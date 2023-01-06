@@ -10,6 +10,7 @@ import com.portifolyo.mesleki1.repository.CampaignRepository;
 import com.portifolyo.mesleki1.repository.projections.projeciton.CampaignInfo;
 import com.portifolyo.mesleki1.services.CampaignService;
 import com.portifolyo.mesleki1.services.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+
 public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements CampaignService {
 
     private final CampaignRepository campaignRepository;
@@ -41,7 +43,7 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
     @Override
     @Transactional
     public void addCampaign(AddCampaignDto dto) throws SqlExceptionCustom {
-        Product p = productService.findProductForShopper(dto.getProductId(), dto.getShopperId());
+        Product p = productService.findProductForShopper(dto.productId(), dto.shopperId());
         if (Objects.nonNull(p)) {
            Campaign c = addCampaignMapper.toEntity(dto);
            c.setActive(true);
@@ -54,19 +56,19 @@ public class CampaignServicesImpl extends BaseServicesImpl<Campaign> implements 
     @Override
     @Transactional
     public void updateCampaign(AddCampaignDto dto) {
-        Optional<Campaign> c = this.campaignRepository.findByProduct_IdEqualsAndProduct_Shopper_IdEquals(dto.getProductId(), dto.getShopperId());
+        Optional<Campaign> c = this.campaignRepository.findByProduct_IdEqualsAndProduct_Shopper_IdEquals(dto.productId(), dto.shopperId());
         c.ifPresentOrElse(i -> {
-            if (Objects.nonNull(dto.getStartDate())) {
-                i.setStartDate(dto.getStartDate());
+            if (Objects.nonNull(dto.startDate())) {
+                i.setStartDate(dto.startDate());
             }
-            if (Objects.nonNull(dto.getEndDate())) {
-                i.setEndDate(dto.getEndDate());
+            if (Objects.nonNull(dto.endDate())) {
+                i.setEndDate(dto.endDate());
             }
-            if (Objects.nonNull(dto.getDescription()) || Strings.isEmpty(dto.getDescription()) || Strings.isBlank(dto.getDescription())) {
-                i.setDescription(dto.getDescription());
+            if (Objects.nonNull(dto.description()) || Strings.isEmpty(dto.description()) || Strings.isBlank(dto.description())) {
+                i.setDescription(dto.description());
             }
-            if (Objects.nonNull(dto.getDiscountRate())) {
-                i.setDiscountRate(dto.getDiscountRate().doubleValue());
+            if (Objects.nonNull(dto.discountRate())) {
+                i.setDiscountRate(dto.discountRate().doubleValue());
             }
             try {
                 update(i);

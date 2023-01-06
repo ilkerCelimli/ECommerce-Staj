@@ -15,7 +15,7 @@ public interface UserServices extends BaseServices<User>, UserDetailsService {
     boolean checkUserIsActivated(String email);
    /* boolean checkUserEmailActivited(String email);
     boolean checkUserPassword(String email, String password); */
-    boolean sendUserEmail(String email) throws MessagingException;
+    boolean sendUserEmail(String email,String text,String code) throws MessagingException;
     void userRegister(UserRegisterDto dto) throws SQLException;
     boolean activiteEmail(String code) throws SQLException;
     void resetPasswordRequest(String email);

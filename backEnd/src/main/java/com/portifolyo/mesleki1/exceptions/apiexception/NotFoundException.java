@@ -10,9 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 public class NotFoundException extends RuntimeException {
 
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> NotFoundExceptionHandler(Exception ex, WebRequest web) throws NotFoundException{
-        return ResponseEntity.noContent().build();
+    public NotFoundException() {
+        super("Data Is Not Found");
     }
-
 }

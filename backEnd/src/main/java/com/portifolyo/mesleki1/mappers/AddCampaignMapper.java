@@ -13,11 +13,11 @@ public class AddCampaignMapper {
     public Campaign toEntity(AddCampaignDto dto) {
         RandomString randomString = new RandomString();
         Campaign c = new Campaign();
-        c.setStartDate(dto.getStartDate());
-        c.setEndDate(dto.getEndDate());
-        c.setDiscountRate(dto.getDiscountRate().doubleValue());
+        c.setStartDate(dto.startDate());
+        c.setEndDate(dto.endDate());
+        c.setDiscountRate(dto.discountRate().doubleValue());
         c.setCode(randomString.nextString());
-        c.setDescription(dto.getDescription());
+        c.setDescription(dto.description());
         return c;
     }
 

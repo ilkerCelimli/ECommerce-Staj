@@ -19,11 +19,11 @@ public class AdressDtoMapper {
     }
 
     public Adress toEntity(AdressDto dto) {
-        Optional<City> o = this.cityRepository.findById(dto.getCityId());
+        Optional<City> o = this.cityRepository.findById(dto.cityId() );
         Adress adress = new Adress();
         if (o.isPresent()) {
             adress.setCity(o.get());
-            adress.setAdress(dto.getAdress());
+            adress.setAdress(dto.adress());
             adress.setActive(true);
             adress.setDeleted(false);
             return adress;
@@ -31,9 +31,7 @@ public class AdressDtoMapper {
     }
 
     public AdressDto toDto(Adress adress) {
-        AdressDto adressDto = new AdressDto();
-        adressDto.setCityId(adress.getCity().getCode());
-        adressDto.setAdress(adressDto.getAdress());
+        AdressDto adressDto = new AdressDto(adress.getCity().getCode(),adress.getAdress());
         return adressDto;
 
 

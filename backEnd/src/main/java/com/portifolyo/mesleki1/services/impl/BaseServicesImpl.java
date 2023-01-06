@@ -7,6 +7,7 @@ import com.portifolyo.mesleki1.repository.BaseRepository;
 import com.portifolyo.mesleki1.services.BaseServices;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import javax.transaction.Transactional;
@@ -46,6 +47,7 @@ public abstract class BaseServicesImpl<T extends BaseEntity> implements BaseServ
         Date after = entity.getUpdatedAt();
         entity.setUpdatedAt(new Date());
         T e = baseRepository.save(entity);
+        
         if(e.getUpdatedAt().before(after) || e.getUpdatedAt().equals(after)){
             SqlExceptionCustom f = new SqlExceptionCustom();
             log.error("Error while saving entity, {} ,{}",f.getErrorCode(),f.getSQLState());

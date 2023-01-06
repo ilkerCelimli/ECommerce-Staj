@@ -9,9 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 
 public class UserRegisterException extends RuntimeException {
 
-    @ExceptionHandler(UserRegisterException.class)
-    public ResponseEntity<Object> userRegisterException(Exception ex, WebRequest web) {
-        return ResponseEntity.badRequest().body("User already exists");
+    public UserRegisterException() {
+        super("User Aldready is Exists");
     }
-
 }
