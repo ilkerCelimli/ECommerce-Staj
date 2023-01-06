@@ -7,17 +7,21 @@ import com.portifolyo.mesleki1.services.UserServices;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -28,6 +32,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final AuthenticationManager authenticationManager;
     private final UserServices userServices;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public JwtFilter(AuthenticationManager authenticationManager, UserServices userServices, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.authenticationManager = authenticationManager;
         this.userServices = userServices;
@@ -35,42 +40,50 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().contains("login")) {
+        if (request.getServletPath().contains("login")) {
             JwtUtils jwtUtils = new JwtUtils();
             ObjectMapper o = new ObjectMapper();
             LoginDto loginDto = o.readValue(request.getInputStream().readAllBytes(), LoginDto.class);
             User u = this.userServices.findByEmail(loginDto.email());
-
-            if(u.getEmail().equals(loginDto.email()) && bCryptPasswordEncoder.matches(loginDto.password(),u.getPassword())) {
-               String token = jwtUtils.crateToken(loginDto.email());
-                response.setHeader(AUTHORIZATION,String.format("Bearer %s",token ));
+            if (u.getEmail().equals(loginDto.email()) && bCryptPasswordEncoder.matches(loginDto.password(), u.getPassword())) {
+                String token = jwtUtils.crateToken(loginDto.email());
+                response.setHeader(AUTHORIZATION, String.format("Bearer %s", token));
                 UserDetails user = userServices.loadUserByUsername(u.getEmail());
-                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(u.getEmail(),"",user.getAuthorities()));
-                filterChain.doFilter(request,response);
+                Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(u.getEmail(), "", user.getAuthorities()));
+                SecurityContextHolder.getContext().setAuthentication(auth);
+                response.setStatus(200);
+                filterChain.doFilter(request, response);
+                return;
+            } else response.sendError(403, "İzin yok.");
 
-            }
-
-            else response.sendError(403,"Kullanıcı bulunamadı");
         }
         String auth = request.getHeader(AUTHORIZATION);
         boolean validateToken = false;
-        if(!Objects.isNull(auth) && !Strings.isBlank(auth) && !Strings.isEmpty(auth)) {
-            if(auth.contains("bearer ")) {
+        if (!Objects.isNull(auth) && !Strings.isBlank(auth) && !Strings.isEmpty(auth)) {
+            if (auth.contains("Bearer ")) {
                 String token = auth.substring(7);
                 JwtUtils jwt = new JwtUtils();
-               validateToken = jwt.ValidateToken(token);
+                validateToken = jwt.ValidateToken(token);
+                }
+
             }
 
-        }
-
-        if (validateToken || request.getServletPath().contains("/public")) {
+        if(validateToken) {
+            JwtUtils jwt = new JwtUtils();
+            String username = jwt.extractEmail(auth.substring(7));
+            Authentication newAuth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,"", List.of(new SimpleGrantedAuthority("USER"))));
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
             filterChain.doFilter(request,response);
+            return;
         }
-        else response.sendError(404);
+
+            if (request.getServletPath().contains("/public")) {
+                filterChain.doFilter(request, response);
+                return;
+            } else response.sendError(405);
 
 
+        }
     }
-}

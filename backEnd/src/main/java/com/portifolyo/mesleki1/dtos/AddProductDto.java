@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record AddProductDto(
-
      String shopperId,
      String categoriesId,
      String productName,

@@ -37,7 +37,7 @@ public class CategoriesApi {
     }
 
     @PutMapping("/updateCategories/{id}")
-    public ResponseEntity<CategoriesApiInfo> updateCategories(@PathVariable String id , @RequestBody AddCategoriesDto dto) throws SqlExceptionCustom {
+    public ResponseEntity<CategoriesApiInfo> updateCategories(@PathVariable("id") String id , @RequestBody AddCategoriesDto dto) throws SqlExceptionCustom {
         this.categoriesService.updateCategories(id,dto);
         return ResponseEntity.ok().build();
     }

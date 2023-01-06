@@ -28,6 +28,7 @@ public abstract class BaseServicesImpl<T extends BaseEntity> implements BaseServ
     @Override
     @Transactional
     public T save(T entity) throws SqlExceptionCustom {
+        entity.setActive(true);
         T e = baseRepository.save(entity);
         if(Strings.isBlank(e.getId()) || Strings.isEmpty(e.getId())){
             SqlExceptionCustom f = new SqlExceptionCustom();

@@ -44,9 +44,9 @@ public class ShopperApi {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/updateProduct")
-    public ResponseEntity<ShopperInfo> updateProduct(@RequestBody AddProductDto dto) throws SQLException {
-        this.shopperService.updateProduct(dto);
+    @PutMapping("/updateProduct/{id}")
+    public ResponseEntity<ShopperInfo> updateProduct(@PathVariable String id, @RequestBody AddProductDto dto) throws SQLException {
+        this.shopperService.updateProduct(dto,id);
         return ResponseEntity.ok().build();
     }
 

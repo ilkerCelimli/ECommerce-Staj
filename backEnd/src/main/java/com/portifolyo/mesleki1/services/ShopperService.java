@@ -15,7 +15,7 @@ public interface ShopperService extends BaseServices<Shopper>  {
     boolean shopperCheckandSave(User user) throws SqlExceptionCustom;
     void addProduct(AddProductDto dto) throws SQLException;
     boolean checkProductIsExist(String name,String id);
-    void updateProduct(AddProductDto dto) throws SQLException;
+    void updateProduct(AddProductDto dto,String productId) throws SQLException;
     List<ShopperInfo> findShoppers();
     ShopperInfo findShopper(String id);
     void deleteProduct(String id) throws SQLException ;

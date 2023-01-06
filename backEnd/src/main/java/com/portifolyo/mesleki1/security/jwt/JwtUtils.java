@@ -7,6 +7,7 @@ import com.portifolyo.mesleki1.entity.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Component
@@ -15,7 +16,7 @@ public class JwtUtils {
 
     private String secret = "MySuperSecretKey";
 
-    private int expirationTime = 1800000;
+    private int expirationTime = 3600000;
 
     private Algorithm algorithm = Algorithm.HMAC256(secret);
 
@@ -23,7 +24,8 @@ public class JwtUtils {
 
     public boolean ValidateToken(String token) {
        DecodedJWT jwt = JWT.require(algorithm).build().verify(token);
-       if(jwt.getExpiresAtAsInstant().isBefore(new Date().toInstant())) {
+
+       if(jwt.getExpiresAt().after(Date.from(Instant.now()))) {
            return true;
        }
        else return false;

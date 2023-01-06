@@ -74,8 +74,8 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
 
     @Override
     @Transactional
-    public void updateProduct(AddProductDto dto) throws SQLException {
-        Product p = this.productService.findProductForShopper(dto.productName(), dto.productName());
+    public void updateProduct(AddProductDto dto,String productId) throws SQLException {
+        Product p = this.productService.findProductForShopper(productId, dto.shopperId());
         if (Objects.nonNull(dto.productName()) || !Strings.isBlank(dto.productName()) || Strings.isEmpty(dto.productName())) {
             p.setName(dto.productName());
         }

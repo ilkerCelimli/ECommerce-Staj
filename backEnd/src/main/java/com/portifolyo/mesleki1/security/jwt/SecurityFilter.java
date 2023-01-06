@@ -12,19 +12,21 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-@Component
+
 public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(!request.getServletPath().contains("public")) {
+        if (!request.getServletPath().contains("public")) {
             String token = request.getHeader(AUTHORIZATION);
 
-                if(Strings.isBlank(token) || Strings.isEmpty(token) || Objects.isNull(token)) {
-                    response.sendError(403,"This is private api");
-                }
-                        filterChain.doFilter(request,response);
+            if (Strings.isBlank(token) || Strings.isEmpty(token) || Objects.isNull(token)) {
+                response.sendError(403, "This is private api");
+                filterChain.doFilter(request, response);
 
+
+            }
+            filterChain.doFilter(request, response);
+            return;
         }
-        filterChain.doFilter(request,response);
     }
 }

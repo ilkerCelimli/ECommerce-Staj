@@ -15,10 +15,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
-    private final SecurityFilter securityFilter;
-    public SecurityConfig(JwtFilter jwtFilter, SecurityFilter securityFilter) {
+
+    public SecurityConfig(JwtFilter jwtFilter) {
         this.jwtFilter = jwtFilter;
-        this.securityFilter = securityFilter;
     }
 
     @Bean
@@ -27,8 +26,8 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("**/public/**").permitAll();
         http.cors();
-        http.addFilterAfter(new SecurityFilter(), WebAsyncManagerIntegrationFilter.class);
-        http.addFilterAt(jwtFilter, SecurityFilter.class);
+      //  http.addFilterAfter(new SecurityFilter(), WebAsyncManagerIntegrationFilter.class);
+        http.addFilterAfter(jwtFilter, WebAsyncManagerIntegrationFilter.class);
         return http.build();
     }
 
