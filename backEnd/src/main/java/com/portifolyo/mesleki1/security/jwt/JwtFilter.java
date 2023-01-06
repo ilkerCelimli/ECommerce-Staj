@@ -82,7 +82,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if (request.getServletPath().contains("/public")) {
                 filterChain.doFilter(request, response);
                 return;
-            } else response.sendError(405);
+            } else response.sendError(401,"Özel api bura");
 
 
         }
