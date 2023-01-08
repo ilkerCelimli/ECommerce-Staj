@@ -8,9 +8,7 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @Entity
-@ToString
-@Getter
-@Setter
+@Data
 public class Campaign extends BaseEntity {
 
     @Column

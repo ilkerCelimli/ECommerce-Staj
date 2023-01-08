@@ -9,7 +9,6 @@ public interface UserRepository extends BaseRepository<User> {
 
 
     boolean existsUserByEmail(String email);
-    @EntityGraph(value = "User.adressSet")
     Optional<User> findUserByEmailEquals(String email);
     Optional<User> findUserByActivitionCodeEquals(String code);
 

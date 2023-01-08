@@ -10,13 +10,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @Entity(name = "users")
 @Table(name = "users")
-@NamedEntityGraph(name = "User.adressSet", attributeNodes = @NamedAttributeNode("adressSet"))
 public class User extends BaseEntity {
 
 
@@ -42,9 +39,6 @@ public class User extends BaseEntity {
   @Column
   private String activitionCode;
 
-  @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
-  private Set<Adress> adressSet;
-
 
   public User(String name, String surname, Role role, String phoneNumber, String email, String password, Date birtday, long tcNo, String activitionCode) {
     this.name = name;
@@ -56,19 +50,5 @@ public class User extends BaseEntity {
     this.birtday = birtday;
     TcNo = tcNo;
     this.activitionCode = activitionCode;
-    adressSet = new HashSet<>();
-  }
-
-  public User(String name, String surname, Role role, String phoneNumber, String email, String password, Date birtday, long tcNo, String activitionCode, Set<Adress> adresses) {
-    this.name = name;
-    this.surname = surname;
-    this.role = role;
-    PhoneNumber = phoneNumber;
-    this.email = email;
-    this.password = password;
-    this.birtday = birtday;
-    TcNo = tcNo;
-    this.activitionCode = activitionCode;
-    adressSet = adresses;
   }
 }

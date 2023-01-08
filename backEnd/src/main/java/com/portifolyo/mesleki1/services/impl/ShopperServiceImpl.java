@@ -14,6 +14,7 @@ import com.portifolyo.mesleki1.repository.ShopperRepository;
 import com.portifolyo.mesleki1.repository.projections.projeciton.ProductInfo;
 import com.portifolyo.mesleki1.repository.projections.projeciton.ShopperInfo;
 import com.portifolyo.mesleki1.repository.projections.projeciton.converters.ShopperInfoMapper;
+import com.portifolyo.mesleki1.repository.redisRepo.ProductRedisRepo;
 import com.portifolyo.mesleki1.services.CategoriesService;
 import com.portifolyo.mesleki1.services.ProductService;
 import com.portifolyo.mesleki1.services.ShopperService;
@@ -32,14 +33,16 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
     private final CategoriesService categoriesService;
     private final ProductService productService;
     private final ShopperInfoMapper shopperInfoMapper;
+    private final ProductRedisRepo productRedisRepo;
 
-    public ShopperServiceImpl(AddProductMapper addProductMapper, ShopperRepository shopperRepository, CategoriesService categoriesService, ProductService productService, ShopperInfoMapper shopperInfoMapper) {
+    public ShopperServiceImpl(AddProductMapper addProductMapper, ShopperRepository shopperRepository, CategoriesService categoriesService, ProductService productService, ShopperInfoMapper shopperInfoMapper, ProductRedisRepo productRedisRepo) {
         super(shopperRepository);
         this.addProductMapper = addProductMapper;
         this.shopperRepository = shopperRepository;
         this.categoriesService = categoriesService;
         this.productService = productService;
         this.shopperInfoMapper = shopperInfoMapper;
+        this.productRedisRepo = productRedisRepo;
     }
 
 
@@ -63,7 +66,8 @@ public class ShopperServiceImpl extends BaseServicesImpl<Shopper> implements Sho
             Product product = addProductMapper.toEntity(dto);
             product.setShopper(shopper);
             product.setCategories(categories);
-            productService.save(product);
+          Product p =  productService.save(product);
+          productRedisRepo.save(p);
         } else throw new DataIsExistsException();
     }
 

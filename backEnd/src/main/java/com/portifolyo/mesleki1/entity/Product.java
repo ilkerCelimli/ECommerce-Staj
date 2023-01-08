@@ -7,10 +7,8 @@ import java.math.BigDecimal;
 
 @Entity
 @Inheritance
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@ToString
 public class Product extends BaseEntity{
 
 

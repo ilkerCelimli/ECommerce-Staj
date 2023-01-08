@@ -6,6 +6,7 @@ import com.portifolyo.mesleki1.repository.projections.projeciton.CategoriesApiIn
 import com.portifolyo.mesleki1.repository.projections.projeciton.CategoriesInfo;
 import com.portifolyo.mesleki1.services.CategoriesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.jcache.JCacheCache;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class CategoriesApi {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/updateCategories/{id}")
+    @PutMapping("/updateCategories/")
     public ResponseEntity<CategoriesApiInfo> updateCategories(@PathVariable("id") String id , @RequestBody AddCategoriesDto dto) throws SqlExceptionCustom {
         this.categoriesService.updateCategories(id,dto);
         return ResponseEntity.ok().build();

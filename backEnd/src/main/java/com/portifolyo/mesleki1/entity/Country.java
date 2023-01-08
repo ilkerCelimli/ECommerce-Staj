@@ -1,5 +1,6 @@
 package com.portifolyo.mesleki1.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,9 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Country extends BaseEntity {

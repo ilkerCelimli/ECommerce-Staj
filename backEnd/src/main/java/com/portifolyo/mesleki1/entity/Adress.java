@@ -5,8 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Adress extends BaseEntity {
