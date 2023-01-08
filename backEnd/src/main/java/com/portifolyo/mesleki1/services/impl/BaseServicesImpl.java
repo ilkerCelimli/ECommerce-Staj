@@ -7,6 +7,7 @@ import com.portifolyo.mesleki1.repository.BaseRepository;
 import com.portifolyo.mesleki1.services.BaseServices;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -84,5 +85,9 @@ public abstract class BaseServicesImpl<T extends BaseEntity> implements BaseServ
     @Override
     public List<T> findAll() {
         return baseRepository.findAll(Sort.by("createdAt").descending());
+    }
+
+    public List<T> findAllPageable(int page,int size) {
+       return this.baseRepository.findAll(PageRequest.of(page,size)).stream().toList();
     }
 }

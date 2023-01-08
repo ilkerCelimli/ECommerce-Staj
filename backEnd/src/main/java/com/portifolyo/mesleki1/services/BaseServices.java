@@ -13,6 +13,7 @@ public interface BaseServices<T extends BaseEntity>{
     T findById(String id);
     List<T> findAll();
 
+    List<T> findAllPageable(int page,int size);
 
 
 }
